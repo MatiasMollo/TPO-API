@@ -1,3 +1,4 @@
+import "../../assets/css/fonts.css";
 import "./header.css";
 import { useEffect, useState } from "react";
 import diente from "../../assets/diente.png";
