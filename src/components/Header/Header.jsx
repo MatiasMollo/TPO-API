@@ -39,7 +39,6 @@ const Header = () => {
     <header className={scrollNav ? "scroll_header" : ""}>
       <nav>
         <span className="nav_icon">
-          <img src={diente} alt="imagen diente" />
           <a href="#home" className="nav_logo" onClick={scrollTop}>
             Dr Sanchez
           </a>
