@@ -3,7 +3,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 20px;
+  padding: 10px 4em;
   z-index: 1000;
   background-color: #01819d;
   box-sizing: border-box;
@@ -43,5 +43,4 @@ span.nav_icon {
 .nav_icon img.user_icon {
   height: 43px;
   width: auto;
-  margin-right: 15px;
 }

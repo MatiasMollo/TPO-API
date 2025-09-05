@@ -13,9 +13,10 @@ h3 {
   display: flex;
   align-items: flex-start;
   padding: 2em 0px;
-  height: 100vh;
+  height: 93vh;
   background-color: #e0f9ff;
   padding-block: 4em;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -41,7 +42,7 @@ span.services-image {
 }
 
 .services-image img {
-  height: calc(100vh - 8em);
+  height: calc(100vh - 12em);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: top center;

@@ -3,6 +3,7 @@ import Home from "../components/Home/Home";
 import Services from "../components/Services/Services";
 import Location from "../components/Location/Location";
 import WorkWithMe from "../components/WorkWithMe/WorkWithMe";
+import Footer from "../components/Footer/Footer";
 
 export default function Index() {
   return (
@@ -12,6 +13,7 @@ export default function Index() {
       <Services></Services>
       <Location></Location>
       <WorkWithMe></WorkWithMe>
+      <Footer></Footer>
     </>
   );
 }

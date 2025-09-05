@@ -1,5 +1,5 @@
 .WorkWithMe_container {
-  height: 100vh;
+  height: calc(100vh - 13em);
   overflow: hidden;
   display: flex;
   box-sizing: border-box;

@@ -31,7 +31,7 @@ const Location = () => {
               para lograr sonrisas sanas y atractivas.
             </p>
             <h3>
-              <i></i>Barracas 3200, CABA
+              <i>📍</i> Barracas 3200, CABA
             </h3>
           </span>
         </div>
