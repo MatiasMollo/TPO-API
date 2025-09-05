@@ -3,6 +3,7 @@ import "./header.css";
 import { useEffect, useState } from "react";
 import diente from "../../assets/diente.png";
 import user from "../../assets/user.png";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -43,9 +44,9 @@ const Header = () => {
             Dr Sanchez
           </a>
         </span>
-        <span className="nav_icon ">
+        <Link to="/login" className="nav_icon ">
           <img src={user} alt="login icon" className="user_icon" />
-        </span>
+        </Link>
       </nav>
     </header>
   );

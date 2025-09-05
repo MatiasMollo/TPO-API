@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import './App.css'
-import Index from './pages'
+import { useState } from "react";
+import "./App.css";
+import Index from "./pages";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <Index></Index>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
