@@ -1,0 +1,76 @@
+.carousel-container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.carousel-content {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.carousel-card {
+  flex: 0 0 calc(100% / 3); /* 3 cards visibles */
+  box-sizing: border-box;
+  margin: 0 10px;
+  padding: 20px;
+  background: #01819d;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* flechas */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #213547;
+  z-index: 2;
+}
+
+.carousel-btn:hover {
+  color: #000;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* Responsive: en mobile mostrar 1 card */
+@media (max-width: 768px) {
+  .carousel-card {
+    flex: 0 0 100%;
+  }
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.carousel-container {
+  overflow: hidden; /* solo oculta el contenido, no las flechas */
+}
+
+.prev {
+  left: -40px;
+}
+
+.next {
+  right: -40px;
+}
