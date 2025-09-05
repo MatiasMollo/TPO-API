@@ -35,44 +35,43 @@ export default function Citas() {
   };
 
   return (
-    <div className="col-8 mx-auto">
+    <div className="col-12 p-4 col-xl-10 col-xxl-8 mx-auto">
       <div className="d-flex justify-content-between align-items-center mb-2">
         <div>
-          <h1 className="fw-bold mb-1">Gestión de Citas Médicas</h1>
+          <h1 className=" mb-1 text-start">Gestión de Citas Médicas</h1>
           <p className="text-secondary mb-0 text-start">
             Gestiona las citas médicas de tus pacientes de forma eficiente
           </p>
         </div>
         <div className="text-secondary">
-          <span>
+          <span className="small">
             <CalendarDateRangeIcon width={20}></CalendarDateRangeIcon>
             {(new Date()).toDateString()}
             </span>
         </div>
       </div>
 
-      {/* Filtros */}
       <div className="card shadow mb-4 p-2">
         <div className="card-body">
-          <h6 className="fw-bold mb-3 text-start">Filtros</h6>
+          <h6 className="text-secondary mb-3 text-start">Filtros</h6>
           <div className="row">
-            <div className="col-md-4">
+            <div className="col-md-4 my-1">
               <input
                 type="text"
-                className="form-control"
+                className="form-control form-control-sm"
                 placeholder="Nombre del paciente..."
               />
             </div>
-            <div className="col-md-4">
-              <select className="form-select">
+            <div className="col-md-4 my-1">
+              <select className="form-select form-select-sm">
                 <option>Todos los estados</option>
                 <option>Sin confirmar</option>
                 <option>Confirmada</option>
                 <option>Realizada</option>
               </select>
             </div>
-            <div className="col-md-4">
-              <select className="form-select">
+            <div className="col-md-4 my-1">
+              <select className="form-select form-select-sm">
                 <option>Todas las especialidades</option>
                 <option>Cardiología</option>
                 <option>Dermatología</option>
@@ -83,14 +82,9 @@ export default function Citas() {
         </div>
       </div>
 
-      {/* Tabla de citas */}
       <div className="card shadow p-2">
-        <div className="card-body">
-          <h6 className="fw-bold mb-3">
-            <i className="bi bi-heart-pulse me-2"></i>
-            Citas Médicas ({citas.length})
-          </h6>
-          <div className="table-responsive">
+        <div className="card-body overflow-scroll">
+          <h6 className="mb-3"> Citas Médicas ({citas.length})</h6>
             <table className="table table-sm table-hover align-middle">
               <thead>
                 <tr>
@@ -106,13 +100,11 @@ export default function Citas() {
               </thead>
               <tbody>
                 {citas.map((cita, idx) => (
-                  <tr key={idx}>
+                  <tr className="small" key={idx}>
                     <td>
-                      <i className="bi bi-person me-2"></i>
                       {cita.paciente}
                     </td>
                     <td>
-                      <i className="bi bi-calendar me-2"></i>
                       {cita.fecha}
                     </td>
                     <td>{cita.hora}</td>
@@ -154,7 +146,6 @@ export default function Citas() {
                 ))}
               </tbody>
             </table>
-          </div>
         </div>
       </div>
     </div>
