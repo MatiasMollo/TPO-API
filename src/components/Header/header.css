@@ -28,6 +28,7 @@ span.nav_icon {
   width: 10%;
   text-align: left;
   line-height: 1em;
+  text-decoration: none !important;
 }
 
 .nav_icon {

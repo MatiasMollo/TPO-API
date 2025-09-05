@@ -1,5 +1,5 @@
 .WorkWithMe_container {
-  height: calc(100vh - 13em);
+  /* height: calc(100vh - 13em); */
   overflow: hidden;
   display: flex;
   box-sizing: border-box;
@@ -46,8 +46,8 @@
 }
 
 .WorkWithMe_content form button {
-  width: 40%;
   margin-top: 1em;
+  width: 20%;
 }
 
 .WorkWithMe_img img {

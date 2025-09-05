@@ -27,7 +27,12 @@ const WorkWithMe = () => {
             placeholder="¿Cuál es tu motivo de consulta?"
           ></textarea>
 
-          <button type="submit">Enviar</button>
+          <button
+            type="submit"
+            style={{ backgroundColor: "#01819d", color: "white" }}
+          >
+            Enviar
+          </button>
         </form>
       </span>
       <span className="WorkWithMe_img">

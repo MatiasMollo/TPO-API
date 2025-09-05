@@ -18,7 +18,9 @@ Realizo aparatos, blanqueamientos y limpiezas profesionales para que su sonrisa 
         <p>
           ¿Querés saber más de mí? <a href="">Descargá mi CV</a>
         </p>
-        <button>Trabajemos juntos</button>
+        <button style={{ backgroundColor: "#01819d", color: "white" }}>
+          Trabajemos juntos
+        </button>{" "}
       </span>
     </div>
   );

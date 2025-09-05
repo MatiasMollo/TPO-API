@@ -1,7 +1,9 @@
 h2 {
-  font-size: 3em;
-  letter-spacing: -1px;
+  font-size: 3em !important;
+  letter-spacing: -1px !important;
   margin-top: -22px;
+  font-weight: bold;
+  margin-bottom: 0.5em !important;
 }
 
 h3 {
