@@ -5,6 +5,7 @@ import App from './App';
 import Login from './pages/login';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Citas from './pages/citas';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -12,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/citas" element={<Citas />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
