@@ -1,7 +1,10 @@
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   padding: 10px 20px;
-  z-index: 100;
+  z-index: 1000;
   background-color: #01819d;
   box-sizing: border-box;
 }

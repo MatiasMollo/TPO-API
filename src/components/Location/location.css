@@ -8,15 +8,16 @@ h2 {
 .location_container {
   width: 100%;
   padding-block: 4em;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .location_content {
-  padding-inline: 4em;
   display: flex;
   gap: 4em;
   text-align: left;
   box-sizing: border-box;
-  height: 42vh;
+  height: 40vh;
 }
 
 .location_content p {
