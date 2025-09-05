@@ -1,0 +1,18 @@
+footer {
+  height: 10em;
+  background-color: #213547;
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 4em;
+}
+
+footer p {
+  margin: 0px;
+  padding: 2px;
+  font-size: 0.9em;
+  width: 100%;
+  text-align: left;
+}

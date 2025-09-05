@@ -1,0 +1,46 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 4em;
+  z-index: 1000;
+  background-color: #01819d;
+  box-sizing: border-box;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+span.nav_icon {
+  display: flex;
+}
+
+.nav_logo {
+  color: white;
+  font-size: 1.4em;
+  text-transform: uppercase;
+  font-family: "GoogleSansCode", sans-serif;
+  display: inline-flex;
+  width: 10%;
+  text-align: left;
+  line-height: 1em;
+}
+
+.nav_icon {
+  align-items: center;
+}
+
+.nav_icon img {
+  height: 60px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.nav_icon img.user_icon {
+  height: 43px;
+  width: auto;
+}

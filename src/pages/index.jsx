@@ -1,10 +1,20 @@
-import Login from "./login";
 
-export default function Index()
-{
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold text-blue-600">Landing Page</h1>
-        </div>
-    )
+import Header from "../components/Header/Header";
+import Home from "../components/Home/Home";
+import Services from "../components/Services/Services";
+import Location from "../components/Location/Location";
+import WorkWithMe from "../components/WorkWithMe/WorkWithMe";
+import Footer from "../components/Footer/Footer";
+
+export default function Index() {
+  return (
+    <>
+      <Header></Header>
+      <Home></Home>
+      <Services></Services>
+      <Location></Location>
+      <WorkWithMe></WorkWithMe>
+      <Footer></Footer>
+    </>
+  );
 }
