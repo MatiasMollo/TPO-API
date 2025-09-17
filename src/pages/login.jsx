@@ -35,7 +35,7 @@ export default function Login() {
           }}
         >
           <div className="p-4 text-start h-100">
-            <h2 className="h4 fw-secondary mb-2">
+            <h2 className="h4 fw-secondary mb-2 mt-5">
               ¡Hola! Te damos la bienvenida
             </h2>
             <p className="mb-4 text-secondary">

@@ -13,9 +13,9 @@ h3 {
 
 .services-container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 2em 0px;
-  height: 93vh;
+  min-height: calc(100vh + 68px);
   background-color: #e0f9ff;
   padding-block: 4em;
   overflow: hidden;

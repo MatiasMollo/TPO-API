@@ -36,7 +36,7 @@ export default function Citas() {
 
   return (
     <div className="col-12 p-4 col-xl-10 col-xxl-8 mx-auto">
-      <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="d-flex justify-content-between align-items-center mb-2 mt-5">
         <div>
           <h1 className=" mb-1 text-start">Gestión de Citas Médicas</h1>
           <p className="text-secondary mb-0 text-start">
@@ -46,8 +46,8 @@ export default function Citas() {
         <div className="text-secondary">
           <span className="small">
             <CalendarDateRangeIcon width={20}></CalendarDateRangeIcon>
-            {(new Date()).toDateString()}
-            </span>
+            {new Date().toDateString()}
+          </span>
         </div>
       </div>
 
@@ -85,67 +85,57 @@ export default function Citas() {
       <div className="card shadow p-2">
         <div className="card-body overflow-scroll">
           <h6 className="mb-3"> Citas Médicas ({citas.length})</h6>
-            <table className="table table-sm table-hover align-middle">
-              <thead>
-                <tr>
-                  <th>Paciente</th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Especialidad</th>
-                  <th>Estado</th>
-                  <th>Contacto</th>
-                  <th>Notas</th>
-                  <th>Acciones</th>
+          <table className="table table-sm table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Paciente</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Especialidad</th>
+                <th>Estado</th>
+                <th>Contacto</th>
+                <th>Notas</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {citas.map((cita, idx) => (
+                <tr className="small" key={idx}>
+                  <td>{cita.paciente}</td>
+                  <td>{cita.fecha}</td>
+                  <td>{cita.hora}</td>
+                  <td>{cita.especialidad}</td>
+                  <td>
+                    {cita.estado === "Sin confirmar" && (
+                      <span className="badge bg-secondary">Sin confirmar</span>
+                    )}
+                    {cita.estado === "Confirmada" && (
+                      <span className="badge bg-primary">Confirmada</span>
+                    )}
+                    {cita.estado === "Realizada" && (
+                      <span className="badge bg-success">Realizada</span>
+                    )}
+                  </td>
+                  <td>
+                    {cita.contacto}
+                    <br />
+                    <span className="text-secondary small">{cita.email}</span>
+                  </td>
+                  <td>{cita.notas}</td>
+                  <td>
+                    {cita.estado === "Sin confirmar" && (
+                      <button
+                        className="btn btn-sm btn-success"
+                        onClick={() => confirmarCita(idx)}
+                      >
+                        Confirmar
+                      </button>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {citas.map((cita, idx) => (
-                  <tr className="small" key={idx}>
-                    <td>
-                      {cita.paciente}
-                    </td>
-                    <td>
-                      {cita.fecha}
-                    </td>
-                    <td>{cita.hora}</td>
-                    <td>{cita.especialidad}</td>
-                    <td>
-                      {cita.estado === "Sin confirmar" && (
-                        <span className="badge bg-secondary">
-                          Sin confirmar
-                        </span>
-                      )}
-                      {cita.estado === "Confirmada" && (
-                        <span className="badge bg-primary">
-                          Confirmada
-                        </span>
-                      )}
-                      {cita.estado === "Realizada" && (
-                        <span className="badge bg-success">
-                          Realizada
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      {cita.contacto}
-                      <br />
-                      <span className="text-secondary small">{cita.email}</span>
-                    </td>
-                    <td>{cita.notas}</td>
-                    <td>
-                      {cita.estado === "Sin confirmar" && (
-                        <button
-                          className="btn btn-sm btn-success"
-                          onClick={() => confirmarCita(idx)}
-                        >
-                          Confirmar
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
