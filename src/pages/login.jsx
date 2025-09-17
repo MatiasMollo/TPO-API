@@ -1,6 +1,6 @@
 import { EyeIcon } from "@heroicons/react/16/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -9,29 +9,32 @@ export default function Login() {
 
   return (
     <div className="d-flex justify-content-center min-vh-100">
-      <div className="d-none d-md-flex flex-column col-md-6 col-xl-8 p-4 min-vh-100 position-relative">
-        <img
-          src="/src/assets/clients.svg"
-          alt="Imagen de clientes"
-          className="col-7 bottom-0 position-fixed"
-        />
-      </div>
-
-      <Grid container alignItems="center" spacing={2}>
+      <Grid container alignItems="center">
+        <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ minHeight: "100vh" }}>
+          <Box
+            component="img"
+            src="/src/assets/clients.jpg"
+            alt="Imagen de clientes"
+            sx={{
+              width: "100%",
+              minHeight: "100vh",
+              objectFit: "cover",
+            }}
+          />
+        </Grid>
         <Grid
           item
-          xs={12}
-          md={6}
-          xl={4}
+          spacing={2}
+          size={{ xs: 12, md: 5, xl: 4 }}
           sx={{
             bgcolor: "white",
-            boxShadow: 3, // usa los niveles de sombra del theme (0–24)
+            boxShadow: 3,
             zIndex: 3,
             p: 4,
             minHeight: "100vh",
           }}
         >
-          <div className="p-4 mx-4 text-start">
+          <div className="p-4 text-start h-100">
             <h2 className="h4 fw-secondary mb-2">
               ¡Hola! Te damos la bienvenida
             </h2>
@@ -85,7 +88,7 @@ export default function Login() {
               <Link to="/citas">
                 <button
                   type="submit"
-                  className="btn btn-danger fw-semibold mb-3 mx-auto"
+                  className="btn btn-primary fw-semibold mb-3 mx-auto"
                 >
                   Ingresar
                 </button>
