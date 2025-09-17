@@ -40,7 +40,7 @@ const Services = () => {
   ];
 
   return (
-    <div className="services-container">
+    <div className="services-container" id="services">
       <span className="services-image">
         <img src={imgPaciente} alt="" />
       </span>
