@@ -9,15 +9,15 @@ export default function Login() {
 
   return (
     <div className="d-flex justify-content-center min-vh-100">
-      <Grid container alignItems="center">
-        <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ minHeight: "100vh" }}>
+      <Grid container sx={{ minHeight: "100vh" }} alignItems="stretch">
+        <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ height: "100%" }}>
           <Box
             component="img"
             src="/src/assets/clients.jpg"
             alt="Imagen de clientes"
             sx={{
               width: "100%",
-              minHeight: "100vh",
+              height: "100%",
               objectFit: "cover",
             }}
           />

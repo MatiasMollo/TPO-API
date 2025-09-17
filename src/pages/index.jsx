@@ -9,7 +9,6 @@ import Footer from "../components/Footer/Footer";
 export default function Index() {
   return (
     <>
-      <Header></Header>
       <Home></Home>
       <Services></Services>
       <Location></Location>
