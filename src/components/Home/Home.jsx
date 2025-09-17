@@ -18,9 +18,16 @@ Realizo aparatos, blanqueamientos y limpiezas profesionales para que su sonrisa 
         <p>
           ¿Querés saber más de mí? <a href="">Descargá mi CV</a>
         </p>
-        <button style={{ backgroundColor: "#01819d", color: "white" }}>
+        <button
+          style={{ backgroundColor: "#01819d", color: "white" }}
+          onClick={() =>
+            document
+              .getElementById("workWithMe")
+              .scrollIntoView({ behavior: "smooth" })
+          }
+        >
           Trabajemos juntos
-        </button>{" "}
+        </button>
       </span>
     </div>
   );
