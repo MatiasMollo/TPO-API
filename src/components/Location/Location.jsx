@@ -13,7 +13,7 @@ const Location = () => {
 
   return (
     <>
-      <div className="location_container">
+      <div className="location_container" id="location">
         <div className="location_content">
           <span>
             <img src={location} alt="Consultorio Dental Health." />

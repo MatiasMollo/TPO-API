@@ -4,7 +4,7 @@ import React from "react";
 
 const WorkWithMe = () => {
   return (
-    <div className="WorkWithMe_container">
+    <div className="WorkWithMe_container" id="workWithMe">
       <span className="WorkWithMe_content">
         <h2>¡Trabajemos Juntos!</h2>
         <p>Reservá una cita conmigo, completando los siguientes datos:</p>
