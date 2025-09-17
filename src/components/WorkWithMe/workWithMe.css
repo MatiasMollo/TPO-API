@@ -1,7 +1,8 @@
 .WorkWithMe_container {
-  /* height: calc(100vh - 13em); */
+  min-height: calc(100vh + 68px);
   overflow: hidden;
   display: flex;
+  align-items: center;
   box-sizing: border-box;
   background-color: #e0f9ff;
 }
