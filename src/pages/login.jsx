@@ -1,6 +1,6 @@
 import { EyeIcon } from "@heroicons/react/16/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -35,9 +35,9 @@ export default function Login() {
           }}
         >
           <div className="p-4 text-start h-100">
-            <h2 className="h4 fw-secondary mb-2 mt-5">
+            <Typography variant="h2" marginTop={5} gutterBottom>
               ¡Hola! Te damos la bienvenida
-            </h2>
+            </Typography>
             <p className="mb-4 text-secondary">
               Completá tus datos para ingresar
             </p>

@@ -3,6 +3,7 @@ import "./services.css";
 import "../../assets/css/fonts.css";
 import imgPaciente from "../../assets/services.jpg";
 import ServiceItem from "./ServiceItem";
+import { Typography } from "@mui/material";
 
 const Services = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -45,7 +46,7 @@ const Services = () => {
         <img src={imgPaciente} alt="" />
       </span>
       <span className="services_content">
-        <h2>Mis servicios</h2>
+        <Typography variant="h2">Mis servicios</Typography>
         <div className="services_list">
           {servicesData.map((service, index) => (
             <ServiceItem

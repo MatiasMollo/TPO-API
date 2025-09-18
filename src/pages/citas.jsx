@@ -1,4 +1,5 @@
 import { CalendarDateRangeIcon } from "@heroicons/react/24/outline";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 
 // Repositorio temmporal hasta conectar DB
@@ -38,7 +39,7 @@ export default function Citas() {
     <div className="col-12 p-4 col-xl-10 col-xxl-8 mx-auto">
       <div className="d-flex justify-content-between align-items-center mb-2 mt-5">
         <div>
-          <h1 className=" mb-1 text-start">Gestión de Citas Médicas</h1>
+          <Typography variant="h1">Gestión de Citas Médicas</Typography>
           <p className="text-secondary mb-0 text-start">
             Gestiona las citas médicas de tus pacientes de forma eficiente
           </p>
