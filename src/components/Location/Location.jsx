@@ -2,6 +2,7 @@ import React from "react";
 import location from "../../assets/location.jpg";
 import Carousel from "../Carrousel/Carrousel";
 import "./location.css";
+import { Typography } from "@mui/material";
 
 const Location = () => {
   const items = [
@@ -19,7 +20,7 @@ const Location = () => {
             <img src={location} alt="Consultorio Dental Health." />
           </span>
           <span>
-            <h2>DentalHealth</h2>
+            <Typography variant="h2">DentalHealth</Typography>
             <p>
               Mi espacio, dedicado al cuidado de la salud bucal y la estética
               dental. Cuento con tecnología de última generación y un enfoque
@@ -30,13 +31,15 @@ const Location = () => {
               experiencia profesional, calidez humana y soluciones innovadoras
               para lograr sonrisas sanas y atractivas.
             </p>
-            <h3>
+            <Typography variant="h5" marginTop={2}>
               <i>📍</i> Barracas 3200, CABA
-            </h3>
+            </Typography>
           </span>
         </div>
         <div className="carrousel">
-          <h2>Algunos de mis clientes</h2>
+          <Typography variant="h2" gutterBottom textAlign={"start"}>
+            Algunos de mis clientes
+          </Typography>
           <Carousel items={items} />
         </div>
       </div>

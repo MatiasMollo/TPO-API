@@ -44,8 +44,3 @@ h2 {
   box-sizing: border-box;
   display: block;
 }
-
-.carrousel h2 {
-  text-align: left;
-  letter-spacing: -1px;
-}

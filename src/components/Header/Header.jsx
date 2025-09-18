@@ -13,7 +13,6 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
 const pages = [
   { name: "Nosotros", path: "location" },
