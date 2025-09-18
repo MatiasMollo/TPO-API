@@ -1,6 +1,6 @@
 import { EyeIcon } from "@heroicons/react/16/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { Grid, Box, Typography } from "@mui/material";
+import { Grid, Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -86,12 +86,18 @@ export default function Login() {
                 </label>
               </div>
               <Link to="/citas">
-                <button
-                  type="submit"
-                  className="btn btn-primary fw-semibold mb-3 mx-auto"
+                <Button
+                  variant="contained"
+                  // type="submit"
+                  sx={{
+                    background: "#01819d",
+                    color: "white",
+                    width: "max-content",
+                    marginTop: "1em",
+                  }}
                 >
-                  Ingresar
-                </button>
+                  Ingresar{" "}
+                </Button>
               </Link>
             </form>
             <div className="text-center mb-3">

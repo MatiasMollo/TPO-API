@@ -2,7 +2,7 @@ import "../../assets/css/fonts.css";
 import "./home.css";
 import imgDoctor from "../../assets/img-doctor.jpg";
 import React from "react";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 const Home = () => {
   return (
@@ -28,16 +28,17 @@ Realizo aparatos, blanqueamientos y limpiezas profesionales para que su sonrisa 
         <p>
           ¿Querés saber más de mí? <a href="">Descargá mi CV</a>
         </p>
-        <button
-          style={{ backgroundColor: "#01819d", color: "white" }}
+        <Button
+          variant="outlined"
           onClick={() =>
             document
               .getElementById("workWithMe")
               .scrollIntoView({ behavior: "smooth" })
           }
+          sx={{ borderColor: "#01819d", color: "#01819d" }}
         >
           Trabajemos juntos
-        </button>
+        </Button>
       </span>
     </div>
   );

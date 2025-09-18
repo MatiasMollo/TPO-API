@@ -84,7 +84,7 @@ export default function Citas() {
       </div>
 
       <div className="card shadow p-2">
-        <div className="card-body overflow-scroll">
+        <div className="card-body">
           <h6 className="mb-3"> Citas Médicas ({citas.length})</h6>
           <table className="table table-sm table-hover align-middle">
             <thead>
