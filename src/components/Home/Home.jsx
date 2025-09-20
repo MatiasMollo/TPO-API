@@ -6,7 +6,7 @@ const Home = () => {
     <Grid
       container
       id="home"
-      sx={{ minHeight: "calc(100vh + 68px)" }}
+      sx={{ height: { md: "calc(100vh + 68px)", sx: "auto" } }}
       alignItems="center"
       spacing={2}
       overflow={"hidden"}
@@ -18,7 +18,7 @@ const Home = () => {
           alt="Retrato Dr Sanchez"
           sx={{
             width: "100%",
-            height: "auto",
+            backgroundSize: "cover",
           }}
         />
       </Grid>
