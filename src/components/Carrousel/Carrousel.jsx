@@ -30,7 +30,7 @@ const Carousel = ({ items }) => {
             image={item.imagen}
             title="imagen paciente"
           />
-          <CardContent key={index} sx={{ padding: 2, height: 180 }}>
+          <CardContent key={index} sx={{ padding: 2, height: 110 }}>
             <Typography gutterBottom variant="h5" component="div">
               {item.nombre}
             </Typography>
