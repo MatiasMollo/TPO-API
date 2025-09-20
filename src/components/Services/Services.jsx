@@ -21,7 +21,12 @@ const Services = () => {
       backgroundColor="#e0f9ff"
       paddingBlock={{ xs: 4, md: 0 }}
     >
-      <Grid item size={{ xs: 12, md: 6 }} overflow={"hidden"}>
+      <Grid
+        item
+        size={{ xs: 12, md: 6 }}
+        overflow={"hidden"}
+        id="foto-servicios"
+      >
         <Box
           component="img"
           src={imgPaciente}
