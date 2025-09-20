@@ -1,6 +1,4 @@
-import React from "react";
 import "./services.css";
-import "../../assets/css/fonts.css";
 import { Typography } from "@mui/material";
 
 const ServiceItem = ({ title, description, isOpen, onToggle }) => {
@@ -14,16 +12,32 @@ const ServiceItem = ({ title, description, isOpen, onToggle }) => {
         <Typography
           variant="h5"
           sx={{
-            marginBottom: 2,
+            marginBottom: 1,
           }}
           gutterBottom
         >
-          <span className="service-item">{isOpen ? "-" : "+"}</span>
+          <Typography
+            sx={{
+              color: "#01819d",
+              fontWeight: "bold",
+              paddingRight: "0.5em",
+              display: "inline-block",
+              fontSize: "1em",
+            }}
+          >
+            {isOpen ? "-" : "+"}
+          </Typography>
           {title}
         </Typography>
       </div>
       <div className={`service_description-wrapper ${isOpen ? "open" : ""}`}>
-        <p className="service_description">{description}</p>
+        <Typography
+          borderBottom={"2.5px solid #01819d"}
+          mb={4}
+          sx={{ width: { xs: "100%", md: "50%" } }}
+        >
+          {description}
+        </Typography>
       </div>
     </div>
   );
