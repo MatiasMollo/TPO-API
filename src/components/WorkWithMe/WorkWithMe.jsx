@@ -40,7 +40,10 @@ const WorkWithMe = () => {
       backgroundColor="#e0f9ff"
     >
       <Grid item xs={12} md={6} sx={{ padding: "4em", textAlign: "left" }}>
-        <Typography variant="h2" sx={{ marginLeft: "-0.05em" }}>
+        <Typography
+          variant="h2"
+          sx={{ marginLeft: "-0.05em", lineHeight: 0.9, mb: 1.5 }}
+        >
           Trabajemos Juntos
         </Typography>
         <Typography gutterBottom>
