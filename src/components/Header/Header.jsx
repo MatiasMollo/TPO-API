@@ -52,6 +52,7 @@ function Header() {
                 textDecoration: "none",
               }}
             >
+              {/* TODO: Arreglar scroll arriba */}
               DR SANCHEZ
             </Typography>
           </Link>
