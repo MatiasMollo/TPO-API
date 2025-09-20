@@ -1,17 +1,38 @@
-import "../../assets/css/fonts.css";
-import "./home.css";
 import imgDoctor from "../../assets/img-doctor.jpg";
-import React from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Grid, Box } from "@mui/material";
 
 const Home = () => {
   return (
-    <div style={{ display: "flex" }} className="home_container" id="home">
-      <span className="home_img">
-        <img src={imgDoctor} alt="" />
-      </span>
-      <span className="home_description">
-        <Typography variant="h1" sx={{ marginLeft: "-0.05em" }}>
+    <Grid
+      container
+      id="home"
+      sx={{ minHeight: "calc(100vh + 68px)" }}
+      alignItems="center"
+      spacing={2}
+      overflow={"hidden"}
+    >
+      <Grid item size={{ xs: 12, md: 6 }}>
+        <Box
+          component="img"
+          src={imgDoctor}
+          alt="Retrato Dr Sanchez"
+          sx={{
+            width: "100%",
+            height: "auto",
+          }}
+        />
+      </Grid>
+      <Grid
+        item
+        size={{ xs: 12, md: 6 }}
+        sx={{ paddingLeft: "4em", textAlign: "left" }}
+        paddingRight={7}
+        paddingBlock={{ xs: 4, md: 0 }}
+      >
+        <Typography
+          variant="h1"
+          sx={{ marginLeft: "-0.05em", lineHeight: 0.9, mb: 1.5 }}
+        >
           Dr. Pedro Sánchez
         </Typography>
         <Typography
@@ -21,13 +42,19 @@ const Home = () => {
         >
           Dentista
         </Typography>
-
-        <p>{`¡Hola! 
-Soy odontólogo egresado de la UBA, con más de 15 años de experiencia mejorando sonrisas. 
-Realizo aparatos, blanqueamientos y limpiezas profesionales para que su sonrisa luzca más sana, estética y radiante.`}</p>
-        <p>
-          ¿Querés saber más de mí? <a href="">Descargá mi CV</a>
-        </p>
+        <Box gap={2}>
+          <Typography>
+            ¡Hola! Soy odontólogo egresado de la UBA, con más de 15 años de
+            experiencia mejorando sonrisas. Realizo aparatos, blanqueamientos y
+            limpiezas profesionales para que su sonrisa luzca más sana, estética
+            y radiante.
+          </Typography>
+          <Typography>
+            ¿Querés saber más de mí?
+            {/* TODO: que descargue el CV */}{" "}
+            <Typography variant="button">Descargá mi CV</Typography>
+          </Typography>
+        </Box>
         <Button
           variant="outlined"
           onClick={() =>
@@ -35,12 +62,12 @@ Realizo aparatos, blanqueamientos y limpiezas profesionales para que su sonrisa 
               .getElementById("workWithMe")
               .scrollIntoView({ behavior: "smooth" })
           }
-          sx={{ borderColor: "#01819d", color: "#01819d" }}
+          sx={{ borderColor: "#01819d", color: "#01819d", marginTop: 3 }}
         >
           Trabajemos juntos
         </Button>
-      </span>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

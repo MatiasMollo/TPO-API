@@ -15,8 +15,8 @@ import { UserIcon } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 
 const pages = [
-  { name: "Nosotros", path: "location" },
   { name: "Servicios", path: "services" },
+  { name: "Nosotros", path: "location" },
   { name: "Contacto", path: "workWithMe" },
 ];
 
@@ -52,6 +52,7 @@ function Header() {
                 textDecoration: "none",
               }}
             >
+              {/* TODO: Arreglar scroll arriba */}
               DR SANCHEZ
             </Typography>
           </Link>
