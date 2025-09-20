@@ -1,0 +1,13 @@
+/* crea clases para open/ close de items */
+
+.service_description-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+
+.service_description-wrapper.open {
+  max-height: 200px;
+  opacity: 1;
+}
