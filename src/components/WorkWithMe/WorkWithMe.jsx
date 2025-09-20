@@ -43,7 +43,7 @@ const WorkWithMe = () => {
         <Typography variant="h2" sx={{ marginLeft: "-0.05em" }}>
           Trabajemos Juntos
         </Typography>
-        <Typography>
+        <Typography gutterBottom>
           Reservá una cita conmigo, completando los siguientes datos:
         </Typography>
 
