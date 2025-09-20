@@ -1,4 +1,3 @@
-import "./services.css";
 import { Typography } from "@mui/material";
 
 const ServiceItem = ({ title, description, isOpen, onToggle }) => {
