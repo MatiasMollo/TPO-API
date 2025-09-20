@@ -18,6 +18,8 @@ const WorkWithMe = () => {
     "2025-09-23": ["09:30", "13:00", "16:30"],
   };
 
+  const obrasSociales = ["OSDE", "AMFFA", "PAMI"];
+
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [obraSocial, setObraSocial] = useState("");
@@ -65,9 +67,11 @@ const WorkWithMe = () => {
                 label="Obra social"
                 onChange={(e) => setObraSocial(e.target.value)}
               >
-                <MenuItem value="OSDE">OSDE</MenuItem>
-                <MenuItem value="AMFFA">AMFFA</MenuItem>
-                <MenuItem value="PAMI">PAMI</MenuItem>
+                {obrasSociales.map((obra) => (
+                  <MenuItem key={obra} value={obra}>
+                    {obra}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
 
@@ -153,50 +157,5 @@ const WorkWithMe = () => {
     </Grid>
   );
 };
-
-/*
-.WorkWithMe_container {
-  min-height: calc(100vh + 68px);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: #e0f9ff;
-}
-
-.WorkWithMe_container span {
-  width: 50%;
-}
-
-.WorkWithMe_content {
-  text-align: left;
-  padding: 4em;
-  overflow: hidden;
-}
-
-.WorkWithMe_content p {
-  margin-bottom: 1em;
-}
-
-.WorkWithMe_content form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.WorkWithMe_content form label {
-  margin-bottom: -10px;
-}
-
-.WorkWithMe_content form textarea {
-  height: 6em;
-  resize: none;
-}
-
-.WorkWithMe_img img {
-  width: 100%;
-}
-
-*/
 
 export default WorkWithMe;
