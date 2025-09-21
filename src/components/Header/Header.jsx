@@ -125,7 +125,12 @@ function Header() {
                       .getElementById(page.path)
                       .scrollIntoView({ behavior: "smooth" });
                   }}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    "&:focus": { outline: "none" },
+                  }}
                 >
                   {page.name}
                 </Button>
