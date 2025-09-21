@@ -22,7 +22,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 
-// Datos de ejemplo
+// Datos de precarga
 const initialObrasSociales = [
   { id: 1, prestador: 'OSDE', numeroAfiliado: 'OSDE12345' },
   { id: 2, prestador: 'Swiss Medical', numeroAfiliado: 'SM67890' },
@@ -36,7 +36,7 @@ const ObrasSociales = () => {
   const [obraSocialToDelete, setObraSocialToDelete] = useState(null);
   const [formState, setFormState] = useState({ prestador: '', numeroAfiliado: '' });
 
-  // Manejadores del Diálogo de Agregar/Editar
+  // Diálogo de Agregar/Editar
   const handleOpenAddEditDialog = (obraSocial = null) => {
     setEditingObraSocial(obraSocial);
     setFormState(obraSocial || { prestador: '', numeroAfiliado: '' });
@@ -59,7 +59,7 @@ const ObrasSociales = () => {
         os.id === editingObraSocial.id ? { ...os, ...formState } : os
       ));
     } else {
-      // The id is automatically incremented based on the current length of the array
+      // Incremento del número de opción
       const newId = obrasSociales.length > 0 ? Math.max(...obrasSociales.map(os => os.id)) + 1 : 1;
       const newObraSocial = { id: newId, ...formState };
       setObrasSociales([...obrasSociales, newObraSocial]);
@@ -67,7 +67,7 @@ const ObrasSociales = () => {
     handleCloseAddEditDialog();
   };
 
-  // Manejadores del Diálogo de Confirmación de Eliminación
+  // Diálogo de Confirmación de Eliminación
   const handleOpenConfirmDialog = (id) => {
     setObraSocialToDelete(id);
     setOpenConfirmDialog(true);
@@ -92,7 +92,7 @@ return (
       mt: 4,
     }}
   >
-    <Paper sx={{ p: 3, m: 2, border: '1px solid #e0e0e0', boxShadow: 3 }}>
+    <Paper sx={{ p: 3, m: 2, border: '1px solid #e0e0e0', boxShadow: 4 }}>
       <Typography sx={{ fontSize: '3.2em', fontWeight: 500, textAlign: 'left', mb: 5 }}>
         Mis Obras Sociales
       </Typography>
@@ -108,7 +108,7 @@ return (
         <Table aria-label="tabla de obras sociales" size="small">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell>Opción</TableCell>
               <TableCell>Prestador</TableCell>
               <TableCell>Número de Afiliado</TableCell>
               <TableCell align="right">Modificar/Eliminar</TableCell>
