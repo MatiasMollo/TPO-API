@@ -5,6 +5,7 @@ import App from "./App";
 import Login from "./pages/login";
 import "./index.css";
 import Citas from "./pages/citas";
+import ObrasSociales from "./pages/obrasSociales";
 import Header from "./components/Header/Header";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/citas" element={<Citas />} />
+        <Route path="/obras-sociales" element={<ObrasSociales />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
