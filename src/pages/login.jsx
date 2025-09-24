@@ -13,7 +13,7 @@ export default function Login() {
         <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ height: "100%" }}>
           <Box
             component="img"
-            src="/src/assets/clients.jpg"
+            src="/resources/image/home/clients.jpg"
             alt="Imagen de clientes"
             sx={{
               width: "100%",

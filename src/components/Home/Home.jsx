@@ -1,4 +1,4 @@
-import imgDoctor from "../../assets/img-doctor.jpg";
+import imgDoctor from "/resources/image/home/imgDoctor.jpg";
 import { Button, Typography, Grid, Box } from "@mui/material";
 
 const Home = () => {
