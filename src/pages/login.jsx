@@ -100,14 +100,6 @@ export default function Login() {
                 </Button>
               </Link>
             </form>
-            <div className="text-center mb-3">
-              <a
-                href="#"
-                className="text-primary fw-semibold small text-decoration-underline"
-              >
-                ¿Necesitás ayuda para ingresar?
-              </a>
-            </div>
             <div className="card card-shadow d-flex flex-row bg-light p-3">
               <span className="me-3">
                 <InformationCircleIcon
