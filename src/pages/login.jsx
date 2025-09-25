@@ -1,6 +1,17 @@
 import { EyeIcon } from "@heroicons/react/16/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { Grid, Box, Typography, Button } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  InputAdornment,
+  IconButton,
+  FormControlLabel,
+  Checkbox,
+  Card,
+} from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -8,127 +19,128 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="d-flex justify-content-center min-vh-100">
-      <Grid container sx={{ minHeight: "100vh" }} alignItems="stretch">
-        <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ height: "100%" }}>
-          <Box
-            component="img"
-            src="/resources/image/home/clients.jpg"
-            alt="Imagen de clientes"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        </Grid>
-        <Grid
-          item
-          spacing={2}
-          size={{ xs: 12, md: 5, xl: 4 }}
+    <Grid
+      container
+      sx={{ minHeight: "100vh", overflow: "hidden" }} 
+    >
+      <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ height: "100%" }}>
+        <Box
+          component="img"
+          src="/resources/image/home/clients.jpg"
+          alt="Imagen de clientes"
           sx={{
-            bgcolor: "white",
-            boxShadow: 3,
-            zIndex: 3,
-            p: 4,
-            minHeight: "100vh",
+            width: "100%",
+            minHeight: "100vh", 
+            objectFit: "cover",
+            display: "block",
           }}
+        />
+      </Grid>
+      <Grid
+        item
+        spacing={2}
+        size={{ xs: 12, md: 5, xl: 4 }}
+        sx={{
+          bgcolor: "white",
+          boxShadow: 3,
+          p: 4,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        justifyContent={{ xs: "start", md: "center" }}
+      >
+        <Box
+          maxWidth={"400px"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          p={{ xs: 1, md: 0 }}
         >
-          <div className="p-4 text-start h-100">
-            <Typography variant="h2" marginTop={5} gutterBottom>
-              ¡Hola! Te damos la bienvenida
-            </Typography>
-            <p className="mb-4 text-secondary">
-              Completá tus datos para ingresar
-            </p>
-            <form className="d-flex flex-column">
-              <div className="mb-3">
-                <label className="form-label" htmlFor="documento">
-                  Número de documento
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="documento"
-                  placeholder=""
-                />
-              </div>
-              <div className="mb-3 position-relative">
-                <label className="form-label" htmlFor="password">
-                  Contraseña
-                </label>
-                <input
-                  className="form-control pe-5"
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  placeholder=""
-                />
-                <span
-                  className="position-absolute top-50 end-0 me-3"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? "Ocultar" : "Mostrar"}
-                >
-                  <EyeIcon width="20" />
-                </span>
-              </div>
-              <div className="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  id="recordar"
-                  className="form-check-input"
-                />
-                <label
-                  htmlFor="recordar"
-                  className="form-check-label text-secondary"
-                >
-                  Recordar el número de documento
-                </label>
-              </div>
-              <Link to="/citas">
+          <Typography variant="h2" marginTop={5}>
+            ¡Bienvenido!
+          </Typography>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            Por favor, completá tus datos para ingresar
+          </Typography>
+          <form>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="documento"
+              label="Número de documento"
+              variant="outlined"
+            />
+
+            <TextField
+              fullWidth
+              margin="normal"
+              id="password"
+              label="Contraseña"
+              type={showPassword ? "text" : "password"}
+              variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                      aria-label="toggle password visibility"
+                    >
+                      <EyeIcon width={20} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <FormControlLabel
+              control={<Checkbox id="recordar" />}
+              label="Recordar el número de documento"
+            />
+
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Link to="/citas" style={{ textDecoration: "none" }}>
                 <Button
                   variant="contained"
-                  // type="submit"
                   sx={{
-                    background: "#01819d",
-                    color: "white",
-                    width: "max-content",
-                    marginTop: "1em",
+                    backgroundColor: "#01819d",
+                    mt: 2,
+                    px: 4,
+                    py: 1,
+                    display: "block",
                   }}
                 >
-                  Ingresar{" "}
+                  Ingresar
                 </Button>
               </Link>
-            </form>
-            <div className="text-center mb-3">
-              <a
-                href="#"
-                className="text-primary fw-semibold small text-decoration-underline"
-              >
-                ¿Necesitás ayuda para ingresar?
-              </a>
-            </div>
-            <div className="card card-shadow d-flex flex-row bg-light p-3">
-              <span className="me-3">
-                <InformationCircleIcon
-                  width="20"
-                  className="text-primary"
-                ></InformationCircleIcon>
-              </span>
-              <div>
-                <span className="fw-bold text-dark">
-                  No compartas tus claves.
-                </span>
-                <p className="small text-secondary mb-0">
-                  Nunca te solicitaremos esta información por redes sociales,
-                  teléfono o email.
-                  <br />
-                </p>
-              </div>
-            </div>
-          </div>
-        </Grid>
+            </Box>
+          </form>
+          <Card
+            variant="outlined"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mt: 4,
+              p: 2,
+              bgcolor: "grey.50",
+            }}
+          >
+            <Box ml={2}>
+              <InformationCircleIcon width="24" className="text-primary" />
+              <Typography variant="body2" fontWeight="bold">
+                No compartas tus claves.
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Nunca te solicitaremos esta información por redes sociales,
+                teléfono o email.
+              </Typography>
+            </Box>
+          </Card>
+        </Box>
       </Grid>
-    </div>
+    </Grid>
   );
 }
