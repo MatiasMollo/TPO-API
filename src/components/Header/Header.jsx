@@ -141,13 +141,12 @@ function Header() {
           <Box>
             <Link to="/login">
               <Tooltip title="Login">
-                <IconButton sx={{ p: 0 }}>
+                <IconButton sx={{ p: 0, "&:focus": { outline: "none" } }}>
                   <UserIcon
                     style={{
                       width: 26,
                       height: 26,
                       color: "white",
-                      "&:focus": { outline: "none" },
                     }}
                   />
                 </IconButton>
