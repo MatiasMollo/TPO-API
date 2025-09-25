@@ -1,6 +1,6 @@
 import Carousel from "../Carrousel/Carrousel";
 import { Typography, Grid, Box } from "@mui/material";
-import opiniones from "../../assets/data/opinionesData";
+import opiniones from "../../data/opinionesData";
 
 const Location = () => {
   return (

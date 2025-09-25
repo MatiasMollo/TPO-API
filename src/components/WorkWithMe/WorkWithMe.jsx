@@ -1,4 +1,4 @@
-import work from "../../assets/work.jpg";
+import work from "/resources/image/home/work.jpg";
 import {
   Box,
   TextField,

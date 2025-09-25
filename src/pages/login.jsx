@@ -26,7 +26,7 @@ export default function Login() {
       <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ height: "100%" }}>
         <Box
           component="img"
-          src="/src/assets/clients.jpg"
+          src="/resources/image/home/clients.jpg"
           alt="Imagen de clientes"
           sx={{
             width: "100%",
@@ -74,7 +74,6 @@ export default function Login() {
               variant="outlined"
             />
 
-            {/* Contraseña */}
             <TextField
               fullWidth
               margin="normal"
@@ -97,13 +96,11 @@ export default function Login() {
               }}
             />
 
-            {/* Recordar */}
             <FormControlLabel
               control={<Checkbox id="recordar" />}
               label="Recordar el número de documento"
             />
 
-            {/* Botón */}
             <Box display="flex" justifyContent="center" mt={2}>
               <Link to="/citas" style={{ textDecoration: "none" }}>
                 <Button

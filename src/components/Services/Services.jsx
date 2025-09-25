@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import imgPaciente from "../../assets/services.jpg";
+import imgPaciente from "/resources/image/home/services.jpg";
 import ServiceItem from "./ServiceItem";
 import { Typography, Grid, Box } from "@mui/material";
-import servicesData from "../../assets/data/servicesData.js";
+import servicesData from "../../data/servicesData.js";
 
 const Services = () => {
   const [openIndex, setOpenIndex] = useState(null);
