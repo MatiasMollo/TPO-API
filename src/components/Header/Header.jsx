@@ -38,7 +38,7 @@ function Header() {
           disableGutters
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Link to={"/#home"} style={{ textDecoration: "none" }}>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
             <Typography
               variant="h6"
               noWrap
@@ -51,8 +51,15 @@ function Header() {
                 color: "white",
                 textDecoration: "none",
               }}
+              onClick={(e) => {
+                if (pathname === "/") {
+                  e.preventDefault();
+                  document
+                    .getElementById("home")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
             >
-              {/* TODO: Arreglar scroll arriba */}
               DR SANCHEZ
             </Typography>
           </Link>
@@ -96,7 +103,7 @@ function Header() {
               </Menu>
             )}
           </Box>
-          <Link to={"/#home"} style={{ textDecoration: "none" }}>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
             <Typography
               variant="h5"
               noWrap
@@ -109,6 +116,14 @@ function Header() {
                 letterSpacing: ".3rem",
                 color: "white",
                 textDecoration: "none !important",
+              }}
+              onClick={(e) => {
+                if (pathname === "/") {
+                  e.preventDefault();
+                  document
+                    .getElementById("home")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }
               }}
             >
               DR SANCHEZ
