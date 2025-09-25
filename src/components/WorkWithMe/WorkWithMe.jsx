@@ -36,10 +36,13 @@ const WorkWithMe = () => {
       }}
       alignItems="center"
       spacing={2}
-      overflow={"hidden"}
       backgroundColor="#e0f9ff"
     >
-      <Grid item xs={12} md={6} sx={{ padding: "4em", textAlign: "left" }}>
+      <Grid
+        item
+        size={{ xs: 12, md: 6 }}
+        sx={{ padding: "4em", textAlign: "left" }}
+      >
         <Typography
           variant="h2"
           sx={{ marginLeft: "-0.05em", lineHeight: 0.9, mb: 1.5 }}
@@ -50,93 +53,99 @@ const WorkWithMe = () => {
           Reservá una cita conmigo, completando los siguientes datos:
         </Typography>
 
-        <form action="" method="post">
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-          >
-            <TextField label="Nombre y apellido" variant="outlined" fullWidth />
-            <TextField label="Teléfono" variant="outlined" fullWidth />
-            <TextField label="E-mail" variant="outlined" fullWidth />
-
-            {/* Select obra social */}
-            <FormControl fullWidth>
-              <InputLabel>Obra social</InputLabel>
-              <Select
-                value={obraSocial}
-                label="Obra social"
-                onChange={(e) => setObraSocial(e.target.value)}
-              >
-                {obrasSociales.map((obra) => (
-                  <MenuItem key={obra} value={obra}>
-                    {obra}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            {/* Input fecha */}
-            <TextField
-              label="Seleccioná una fecha"
-              type="date"
-              value={selectedDate}
-              onChange={(e) => {
-                setSelectedDate(e.target.value);
-                setSelectedTime(""); // reset hora al cambiar fecha
+        <Box maxWidth={{ xs: "100%", md: "530px" }}>
+          <form action="" method="post">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
               }}
-              InputLabelProps={{ shrink: true }}
+            >
+              <TextField
+                label="Nombre y apellido"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField label="Teléfono" variant="outlined" fullWidth />
+              <TextField label="E-mail" variant="outlined" fullWidth />
+
+              {/* Select obra social */}
+              <FormControl fullWidth>
+                <InputLabel>Obra social</InputLabel>
+                <Select
+                  value={obraSocial}
+                  label="Obra social"
+                  onChange={(e) => setObraSocial(e.target.value)}
+                >
+                  {obrasSociales.map((obra) => (
+                    <MenuItem key={obra} value={obra}>
+                      {obra}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              {/* Input fecha */}
+              <TextField
+                label="Seleccioná una fecha"
+                type="date"
+                value={selectedDate}
+                onChange={(e) => {
+                  setSelectedDate(e.target.value);
+                  setSelectedTime(""); // reset hora al cambiar fecha
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+
+              {/* Select de horas */}
+              <FormControl
+                fullWidth
+                disabled={!selectedDate}
+                sx={{ marginBottom: "1em" }}
+              >
+                <InputLabel>Hora</InputLabel>
+                <Select
+                  value={selectedTime}
+                  label="Hora"
+                  onChange={(e) => setSelectedTime(e.target.value)}
+                >
+                  {selectedDate && availableTimes[selectedDate] ? (
+                    availableTimes[selectedDate].map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem disabled>No hay horas disponibles</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+            </Box>
+
+            {/* Textarea motivo consulta */}
+            <TextField
+              label="Motivo de consulta"
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
             />
 
-            {/* Select de horas */}
-            <FormControl
-              fullWidth
-              disabled={!selectedDate}
-              sx={{ marginBottom: "1em" }}
+            <Button
+              variant="contained"
+              sx={{
+                background: "#01819d",
+                color: "white",
+                width: "max-content",
+                marginTop: "1em",
+                animation: "none",
+              }}
             >
-              <InputLabel>Hora</InputLabel>
-              <Select
-                value={selectedTime}
-                label="Hora"
-                onChange={(e) => setSelectedTime(e.target.value)}
-              >
-                {selectedDate && availableTimes[selectedDate] ? (
-                  availableTimes[selectedDate].map((time) => (
-                    <MenuItem key={time} value={time}>
-                      {time}
-                    </MenuItem>
-                  ))
-                ) : (
-                  <MenuItem disabled>No hay horas disponibles</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Box>
-
-          {/* Textarea motivo consulta */}
-          <TextField
-            label="Motivo de consulta"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-          />
-
-          <Button
-            variant="contained"
-            sx={{
-              background: "#01819d",
-              color: "white",
-              width: "max-content",
-              marginTop: "1em",
-              animation: "none",
-            }}
-          >
-            Trabajemos juntos
-          </Button>
-        </form>
+              Trabajemos juntos
+            </Button>
+          </form>
+        </Box>
       </Grid>
       <Grid
         item
