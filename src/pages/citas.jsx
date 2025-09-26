@@ -54,12 +54,14 @@ export default function Citas() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{minHeight:'70vh'}}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        mb={3}
-      >
+    <Container
+      maxWidth="lg"
+      sx={{
+        minHeight: "70vh",
+        paddingTop: "3em",
+      }}
+    >
+      <Box display="flex" justifyContent="space-between" mb={3}>
         <Box>
           <Typography variant="h5" fontWeight={700} align="left">
             Gestión de Citas Médicas
@@ -106,16 +108,20 @@ export default function Citas() {
             </Select>
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 200 }}>
-            <TextField
-              type="date"
-              size="small"
-            />
+            <TextField type="date" size="small" />
           </FormControl>
         </Box>
       </Paper>
       {/* Tabla de citas */}
-      <Paper elevation={4} sx={{ p: 3, }}>
-        <Typography variant="subtitle1" fontWeight={600} mb={2} display="flex" alignItems="center" gap={1}>
+      <Paper elevation={4} sx={{ p: 3 }}>
+        <Typography
+          variant="subtitle1"
+          fontWeight={600}
+          mb={2}
+          display="flex"
+          alignItems="center"
+          gap={1}
+        >
           {/* <CalendarMonth fontSize="small" /> */}
           Citas Médicas ({citas.length})
         </Typography>
@@ -166,7 +172,7 @@ export default function Citas() {
                         color="primary"
                         size="small"
                         onClick={() => confirmarCita(idx)}
-                        sx={{fontSize:'0.7rem'}}
+                        sx={{ fontSize: "0.7rem" }}
                       >
                         Confirmar
                       </Button>
