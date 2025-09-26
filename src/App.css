@@ -38,3 +38,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.download-link {
+  display: block;
+  font-weight: bolder;
+  color: rgb(1, 129, 157);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.download-link:hover {
+  font-size: 0.9em;
+}

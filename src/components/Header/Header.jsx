@@ -20,6 +20,11 @@ const pages = [
   { name: "Contacto", path: "workWithMe" },
 ];
 
+const actions = [
+  { name: "Citas médicas", path: "citas" },
+  { name: "Obras sociales", path: "obras-sociales" },
+];
+
 function Header() {
   const { pathname } = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -149,6 +154,26 @@ function Header() {
                 >
                   {page.name}
                 </Button>
+              ))}
+            </Box>
+          )}
+
+          {(pathname == "/citas" || pathname == "/obras-sociales") && (
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {actions.map((page) => (
+                <Link to={page.path}>
+                  <Button
+                    key={page.name}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      "&:focus": { outline: "none" },
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                </Link>
               ))}
             </Box>
           )}
