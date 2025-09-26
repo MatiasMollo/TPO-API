@@ -58,6 +58,12 @@ const Services = () => {
             onToggle={() => setOpenIndex(openIndex === index ? null : index)}
           />
         ))}
+        <p>
+          ¿Querés más información?
+          <Typography variant="button" className="download-link">
+            Conocé nuestras tarifas
+          </Typography>
+        </p>
       </Grid>
     </Grid>
   );

@@ -51,8 +51,9 @@ const Home = () => {
           </Typography>
           <Typography>
             ¿Querés saber más de mí?
-            {/* TODO: que descargue el CV */}{" "}
-            <Typography variant="button">Descargá mi CV</Typography>
+            <Typography variant="button" className="download-link">
+              Descargá mi CV
+            </Typography>
           </Typography>
         </Box>
         <Button
