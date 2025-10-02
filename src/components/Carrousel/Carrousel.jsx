@@ -1,11 +1,42 @@
-import React from "react";
-import { Typography, Card, CardMedia, CardContent } from "@mui/material";
+import {
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CircularProgress,
+  Box,
+} from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./carrousel.css";
+import { useEffect, useState } from "react";
 
 const Carousel = ({ items }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!items || items.length === 0) {
+      setLoading(false);
+      return;
+    }
+
+    const imagePromises = items.map(
+      (item) =>
+        new Promise((resolve) => {
+          const img = new Image();
+          img.src = item.imagen;
+          img.onload = resolve;
+          img.onerror = resolve;
+        })
+    );
+
+    const minDelay = new Promise((resolve) => setTimeout(resolve, 1500));
+    Promise.all([...imagePromises, minDelay]).then(() => {
+      setLoading(false);
+    });
+  }, [items]);
+
   const settings = {
     dots: false,
     infinite: true,
@@ -13,22 +44,28 @@ const Carousel = ({ items }) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
+      { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+      { breakpoint: 600, settings: { slidesToShow: 1, slidesToScroll: 1 } },
     ],
   };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 200,
+        }}
+      >
+        <CircularProgress
+          sx={{ color: "rgb(1, 129, 157)" }}
+          variant="indeterminate"
+        />
+      </Box>
+    );
+  }
 
   return (
     <Slider {...settings}>
@@ -42,11 +79,12 @@ const Carousel = ({ items }) => {
           key={index}
         >
           <CardMedia
+            component="img" // 👈 mejor usar src en vez de image
             sx={{ height: 140 }}
-            image={item.imagen}
-            title="imagen paciente"
+            src={item.imagen}
+            alt="imagen paciente"
           />
-          <CardContent key={index} sx={{ padding: 2, height: 110 }}>
+          <CardContent sx={{ padding: 2, height: 110 }}>
             <Typography gutterBottom variant="h5" component="div">
               {item.nombre}
             </Typography>
