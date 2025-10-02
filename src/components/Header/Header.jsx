@@ -149,7 +149,6 @@ function Header() {
                     my: 2,
                     color: "white",
                     display: "block",
-                    "&:focus": { outline: "none" },
                   }}
                 >
                   {page.name}
@@ -168,7 +167,6 @@ function Header() {
                       my: 2,
                       color: "white",
                       display: "block",
-                      "&:focus": { outline: "none" },
                     }}
                   >
                     {page.name}
@@ -181,7 +179,7 @@ function Header() {
           <Box>
             <Link to="/login">
               <Tooltip title="Login">
-                <IconButton sx={{ p: 0, "&:focus": { outline: "none" } }}>
+                <IconButton sx={{ p: 0 }}>
                   <UserIcon
                     style={{
                       width: 26,

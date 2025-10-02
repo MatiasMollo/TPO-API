@@ -19,6 +19,9 @@ const Location = () => {
             width: { xs: "100%", md: "49.4%" },
             border: 0,
             minHeight: "400px",
+            backgroundColor: "transparent",
+            padding: { md: "1em 0 0 1em", xs: 0 },
+            marginRight: { md: "-1em", xs: 0 },
           }}
           allowFullScreen=""
           loading="lazy"
