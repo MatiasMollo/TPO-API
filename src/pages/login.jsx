@@ -20,10 +20,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Grid
-      container
-      sx={{ minHeight: "100vh", overflow: "hidden" }} 
-    >
+    <Grid container sx={{ minHeight: "100vh", overflow: "hidden" }}>
       <Grid item size={{ xs: 0, md: 7, xl: 8 }} sx={{ height: "100%" }}>
         <Box
           component="img"
@@ -31,7 +28,7 @@ export default function Login() {
           alt="Imagen de clientes"
           sx={{
             width: "100%",
-            minHeight: "100vh", 
+            minHeight: "105vh",
             objectFit: "cover",
             display: "block",
           }}
@@ -85,19 +82,19 @@ export default function Login() {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        aria-label="toggle password visibility"
-                        style={{
-                          background: "none",
-                          border: "none",
-                          padding: 0,
-                          margin: 0,
-                          cursor: "pointer",
-                          outline: "none",
-                        }}
-                      >
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label="toggle password visibility"
+                      style={{
+                        background: "none",
+                        border: "none",
+                        padding: 0,
+                        margin: 0,
+                        cursor: "pointer",
+                        outline: "none",
+                      }}
+                    >
                       {showPassword ? (
                         <VisibilityOffIcon fontSize="small" />
                       ) : (
