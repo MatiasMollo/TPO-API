@@ -10,17 +10,20 @@ import {
 } from "@mui/material";
 import { Typography, Button } from "@mui/material";
 import { useState } from "react";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const WorkWithMe = () => {
   const availableTimes = {
-    "2025-09-21": ["09:00", "10:00", "14:00"],
-    "2025-09-22": ["11:00", "15:00", "16:00"],
-    "2025-09-23": ["09:30", "13:00", "16:30"],
+    "2025-10-03": ["09:00", "10:00", "14:00"],
+    "2025-10-04": ["11:00", "15:00", "16:00"],
+    "2025-10-05": ["09:30", "13:00", "16:30"],
   };
 
   const obrasSociales = ["OSDE", "AMFFA", "PAMI"];
 
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [obraSocial, setObraSocial] = useState("");
 
@@ -87,16 +90,13 @@ const WorkWithMe = () => {
               </FormControl>
 
               {/* Input fecha */}
-              <TextField
-                label="Seleccioná una fecha"
-                type="date"
-                value={selectedDate}
-                onChange={(e) => {
-                  setSelectedDate(e.target.value);
-                  setSelectedTime(""); // reset hora al cambiar fecha
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Seleccioná una fecha"
+                  value={selectedDate}
+                  onChange={(newValue) => setSelectedDate(newValue)}
+                />
+              </LocalizationProvider>
 
               {/* Select de horas */}
               <FormControl
@@ -110,12 +110,15 @@ const WorkWithMe = () => {
                   label="Hora"
                   onChange={(e) => setSelectedTime(e.target.value)}
                 >
-                  {selectedDate && availableTimes[selectedDate] ? (
-                    availableTimes[selectedDate].map((time) => (
-                      <MenuItem key={time} value={time}>
-                        {time}
-                      </MenuItem>
-                    ))
+                  {selectedDate &&
+                  availableTimes[selectedDate.format("YYYY-MM-DD")] ? (
+                    availableTimes[selectedDate.format("YYYY-MM-DD")].map(
+                      (time) => (
+                        <MenuItem key={time} value={time}>
+                          {time}
+                        </MenuItem>
+                      )
+                    )
                   ) : (
                     <MenuItem disabled>No hay horas disponibles</MenuItem>
                   )}
