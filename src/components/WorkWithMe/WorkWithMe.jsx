@@ -7,8 +7,11 @@ import {
   Select,
   MenuItem,
   Grid,
+  Typography,
+  Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import { Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -26,6 +29,30 @@ const WorkWithMe = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [obraSocial, setObraSocial] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [email, setEmail] = useState("");
+  const [motivo, setMotivo] = useState("");
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setNombre("");
+    setTelefono("");
+    setEmail("");
+    setObraSocial("");
+    setSelectedDate(null);
+    setSelectedTime("");
+    setMotivo("");
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (_, reason) => {
+    if (reason === "clickaway") return;
+    setOpenSnackbar(false);
+  };
 
   return (
     <Grid
@@ -57,7 +84,7 @@ const WorkWithMe = () => {
         </Typography>
 
         <Box maxWidth={{ xs: "100%", md: "530px" }}>
-          <form action="" method="post">
+          <form onSubmit={handleSubmit}>
             <Box
               sx={{
                 display: "flex",
@@ -69,9 +96,23 @@ const WorkWithMe = () => {
                 label="Nombre y apellido"
                 variant="outlined"
                 fullWidth
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
               />
-              <TextField label="Teléfono" variant="outlined" fullWidth />
-              <TextField label="E-mail" variant="outlined" fullWidth />
+              <TextField
+                label="Teléfono"
+                variant="outlined"
+                fullWidth
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+              />
+              <TextField
+                label="E-mail"
+                variant="outlined"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
               {/* Select obra social */}
               <FormControl fullWidth>
@@ -94,7 +135,10 @@ const WorkWithMe = () => {
                 <DatePicker
                   label="Seleccioná una fecha"
                   value={selectedDate}
-                  onChange={(newValue) => setSelectedDate(newValue)}
+                  onChange={(newValue) => {
+                    setSelectedDate(newValue);
+                    setSelectedTime(""); // reset hora al cambiar fecha
+                  }}
                 />
               </LocalizationProvider>
 
@@ -133,9 +177,12 @@ const WorkWithMe = () => {
               rows={4}
               variant="outlined"
               fullWidth
+              value={motivo}
+              onChange={(e) => setMotivo(e.target.value)}
             />
 
             <Button
+              type="submit"
               variant="contained"
               sx={{
                 background: "#01819d",
@@ -150,6 +197,8 @@ const WorkWithMe = () => {
           </form>
         </Box>
       </Grid>
+
+      {/* Imagen */}
       <Grid
         item
         size={{ xs: 0, md: 6 }}
@@ -169,6 +218,23 @@ const WorkWithMe = () => {
           display={{ xs: "none", md: "block" }}
         />
       </Grid>
+
+      {/* Snackbar flotante */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%", padding: "1.5em" }}
+        >
+          ¡Se ha enviado la solicitud de turno!
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };
