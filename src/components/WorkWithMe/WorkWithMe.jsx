@@ -16,6 +16,7 @@ import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/es";
 
 const WorkWithMe = () => {
   const availableTimes = {
@@ -104,6 +105,7 @@ const WorkWithMe = () => {
                 variant="outlined"
                 fullWidth
                 value={telefono}
+                type="number"
                 onChange={(e) => setTelefono(e.target.value)}
               />
               <TextField
@@ -131,7 +133,10 @@ const WorkWithMe = () => {
               </FormControl>
 
               {/* Input fecha */}
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="es"
+              >
                 <DatePicker
                   label="Seleccioná una fecha"
                   value={selectedDate}
