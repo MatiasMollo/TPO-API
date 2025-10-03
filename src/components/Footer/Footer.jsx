@@ -21,13 +21,13 @@ const Footer = () => {
         }}
       >
         <Box>
-          <Typography>Calle de Cuello, 184</Typography>
-          <Typography>📍 C.P. 28949 Madrid, España</Typography>
+          <Typography>Riobamba 972</Typography>
+          <Typography>📍 CABA, Buenos Aires</Typography>
         </Box>
 
         <Box>
           <Typography>📩 Healthy-Dent@hotmail.com</Typography>
-          <Typography>📞 912 345 678</Typography>
+          <Typography>📞 11 1576-4937</Typography>
           <Typography display="block">
             © Hecho por Avilan Carlos, Mollo Matias y Pou Iara.
           </Typography>
