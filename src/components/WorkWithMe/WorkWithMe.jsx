@@ -78,10 +78,10 @@ const WorkWithMe = () => {
           variant="h2"
           sx={{ marginLeft: "-0.05em", lineHeight: 0.9, mb: 1.5 }}
         >
-          Trabajemos Juntos
+          Solicite una cita
         </Typography>
         <Typography sx={{ marginBottom: "0.5em" }}>
-          Reservá una cita conmigo, completando los siguientes datos:
+          Reservá un turno conmigo, completando los siguientes datos:
         </Typography>
 
         <Box maxWidth={{ xs: "100%", md: "530px" }}>
@@ -197,7 +197,7 @@ const WorkWithMe = () => {
                 animation: "none",
               }}
             >
-              Trabajemos juntos
+              Enviar
             </Button>
           </form>
         </Box>

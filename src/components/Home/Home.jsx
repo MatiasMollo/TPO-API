@@ -65,7 +65,7 @@ const Home = () => {
           }
           sx={{ borderColor: "#01819d", color: "#01819d", marginTop: 3 }}
         >
-          Trabajemos juntos
+          Solicite una cita
         </Button>
       </Grid>
     </Grid>
