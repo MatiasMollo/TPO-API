@@ -33,7 +33,7 @@ const initialObrasSociales = [
 // Yup validation schema
 const validationSchema = Yup.object({
   prestador: Yup.string()
-    .matches(/^[a-zA-Z\s]+$/, 'Solo se permiten letras y espacios.')
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/, 'Solo se permiten letras y espacios.')
     .required('El nombre del prestador es obligatorio'),
   numeroAfiliado: Yup.string()
     .matches(/^[a-zA-Z0-9]+$/, 'Solo se permiten letras y números.')
