@@ -61,7 +61,7 @@ const Location = () => {
         className="carrousel"
       >
         <Typography variant="h4" gutterBottom textAlign={"start"}>
-          Algunos de mis clientes
+          Algunos de mis pacientes
         </Typography>
         <Carousel items={opiniones} />
       </Grid>

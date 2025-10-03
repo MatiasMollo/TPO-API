@@ -6,17 +6,19 @@ import Login from "./pages/login";
 import "./index.css";
 import Citas from "./pages/citas";
 import ObrasSociales from "./pages/obrasSociales";
-import Header from "./components/Header/Header";
+import Layout from "./components/Layout/Layout";
+import Home from "./pages/index.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Header></Header>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/citas" element={<Citas />} />
-        <Route path="/obras-sociales" element={<ObrasSociales />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/citas" element={<Citas />} />
+          <Route path="/obras-sociales" element={<ObrasSociales />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

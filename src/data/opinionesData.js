@@ -2,38 +2,37 @@ const opiniones = [
   {
     nombre: "María López",
     imagen: "/resources/image/pacientes/MariaLopez.jpg",
-    opinion: "Excelente servicio, rápido y muy atento.",
-    puntuacion: 5.0,
+    opinion:
+      "El doctor fue muy cuidadoso, casi no sentí dolor durante la consulta.",
   },
   {
     nombre: "Julián Torres",
     imagen: "/resources/image/pacientes/JulianTorrez.jpg",
-    opinion: "Muy buena experiencia, lo recomendaría sin dudas.",
-    puntuacion: 4.8,
+    opinion:
+      "Me explicó todo el tratamiento con paciencia y claridad. Muy recomendable.",
   },
   {
     nombre: "Carla Fernández",
     imagen: "/resources/image/pacientes/CarlaFernandez.jpg",
-    opinion: "Todo salió perfecto, superó mis expectativas.",
-    puntuacion: 4.9,
+    opinion:
+      "Me hice una limpieza dental y quedé sorprendida con lo bien que quedó.",
   },
   {
     nombre: "Andrés Gómez",
     imagen: "/resources/image/pacientes/AndresGomez.jpg",
-    opinion: "Gran atención al detalle, quedé muy conforme.",
-    puntuacion: 4.7,
+    opinion: "Excelente atención, el consultorio es muy prolijo y moderno.",
   },
   {
     nombre: "Lucía Ramírez",
     imagen: "/resources/image/pacientes/LuciaRamirez.jpg",
-    opinion: "Muy buena calidad y rapidez en la entrega.",
-    puntuacion: 4.6,
+    opinion:
+      "Me ayudó a superar mi miedo al dentista, fue muy amable y profesional.",
   },
   {
     nombre: "Diego Martínez",
     imagen: "/resources/image/pacientes/DiegoMartinez.jpg",
-    opinion: "Excelente trato, volvería a elegirlos.",
-    puntuacion: 4.9,
+    opinion:
+      "Me colocó un implante y el resultado fue impecable. Muy satisfecho.",
   },
 ];
 
