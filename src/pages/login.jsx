@@ -8,16 +8,54 @@ import {
   Button,
   TextField,
   InputAdornment,
-  IconButton,
   FormControlLabel,
   Checkbox,
   Card,
+  Alert,
 } from "@mui/material";
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  async function handleLoginSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      console.log("Login successful:", response.data);
+      localStorage.setItem("authToken", response.data.token);
+      navigate("/citas");
+    } catch (err) {
+
+      if (err.response.data.error) setError(err.response.data.error);
+      else if (err.response.data.message) setError(err.response.data.message);
+      else
+        setError(
+          "Ocurrió un error a la hora de realizar el login. Por favor, reintente más tarde."
+        );
+        
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Grid container sx={{ minHeight: "100vh", overflow: "hidden" }}>
@@ -63,6 +101,19 @@ export default function Login() {
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Por favor, completá tus datos para ingresar
           </Typography>
+
+          {error && (
+            <Alert
+              severity="error"
+              sx={{
+                width: "90%",
+                margin: "1em 0em",
+              }}
+            >
+              {error}
+            </Alert>
+          )}
+
           <form>
             <TextField
               fullWidth
@@ -70,6 +121,7 @@ export default function Login() {
               id="documento"
               label="Número de documento"
               variant="outlined"
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <TextField
@@ -79,6 +131,7 @@ export default function Login() {
               label="Contraseña"
               type={showPassword ? "text" : "password"}
               variant="outlined"
+              onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -112,20 +165,20 @@ export default function Login() {
             />
 
             <Box display="flex" justifyContent="center" mt={2}>
-              <Link to="/citas" style={{ textDecoration: "none" }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#01819d",
-                    mt: 2,
-                    px: 4,
-                    py: 1,
-                    display: "block",
-                  }}
-                >
-                  Ingresar
-                </Button>
-              </Link>
+              <Button
+                onClick={handleLoginSubmit}
+                variant="contained"
+                disabled={loading}
+                sx={{
+                  backgroundColor: "#01819d",
+                  mt: 2,
+                  px: 4,
+                  py: 1,
+                  display: "block",
+                }}
+              >
+                {loading ? "Cargando..." : "Ingresar"}
+              </Button>
             </Box>
           </form>
           <Card
