@@ -34,11 +34,43 @@ export default function Citas() {
     }
   }
 
-  const confirmarCita = (index) => {
-    const nuevasCitas = [...citas];
-    nuevasCitas[index].estado = "Confirmada";
-    setCitas(nuevasCitas);
-  };
+  async function confirmarCita(index) {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/citas/${index}/confirm`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+
+      console.log("confirmé cita:", response.data);
+      getCitas();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function cancelarCita(index) {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/citas/${index}/cancel`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+
+      console.log("cancelé cita:", response.data);
+      getCitas();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     getCitas();
@@ -86,8 +118,8 @@ export default function Citas() {
             <Select label="Estado" defaultValue="">
               <MenuItem value="">Todos los estados</MenuItem>
               <MenuItem value="pendiente">Sin confirmar</MenuItem>
-              <MenuItem value="Confirmada">Confirmada</MenuItem>
-              <MenuItem value="Realizada">Realizada</MenuItem>
+              <MenuItem value="confirmado">Confirmada</MenuItem>
+              <MenuItem value="cancelado">Cancelada</MenuItem>
             </Select>
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 200 }}>
@@ -141,11 +173,11 @@ export default function Citas() {
                       {cita.estado === "pendiente" && (
                         <Chip label="Sin confirmar" size="small" />
                       )}
-                      {cita.estado === "Confirmada" && (
+                      {cita.estado === "confirmado" && (
                         <Chip label="Confirmada" color="primary" size="small" />
                       )}
-                      {cita.estado === "Realizada" && (
-                        <Chip label="Realizada" color="success" size="small" />
+                      {cita.estado === "cancelado" && (
+                        <Chip label="Cancelada" color="error" size="small" />
                       )}
                     </TableCell>
                     <TableCell align="center">
@@ -159,14 +191,14 @@ export default function Citas() {
                       align="center"
                       sx={{
                         maxWidth: "5em",
-                        overflowX: "scroll",
+                        overflowX: "auto",
                         boxSizing: "border-box",
                       }}
                     >
                       {cita.motivo}
                     </TableCell>
                     <TableCell align="center">
-                      {cita.estado === "pendiente" && (
+                      {cita.estado === "pendiente" ? (
                         <span
                           style={{
                             display: "flex",
@@ -179,7 +211,7 @@ export default function Citas() {
                             variant="contained"
                             color="success"
                             size="small"
-                            onClick={() => confirmarCita(idx)}
+                            onClick={() => confirmarCita(idx + 1)}
                             sx={{ fontSize: "0.7rem" }}
                           >
                             Confirmar
@@ -189,12 +221,21 @@ export default function Citas() {
                             variant="contained"
                             color="error"
                             size="small"
-                            onClick={() => confirmarCita(idx)}
+                            onClick={() => cancelarCita(idx + 1)}
                             sx={{ fontSize: "0.7rem" }}
                           >
                             Cancelar
                           </Button>
                         </span>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          sx={{ fontSize: "0.7rem" }}
+                          disabled
+                        >
+                          No hay pendientes
+                        </Button>
                       )}
                     </TableCell>
                   </TableRow>
