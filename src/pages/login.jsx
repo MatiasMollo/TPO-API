@@ -44,14 +44,12 @@ export default function Login() {
       localStorage.setItem("authToken", response.data.token);
       navigate("/citas");
     } catch (err) {
-
       if (err.response.data.error) setError(err.response.data.error);
       else if (err.response.data.message) setError(err.response.data.message);
       else
         setError(
           "Ocurrió un error a la hora de realizar el login. Por favor, reintente más tarde."
         );
-        
     } finally {
       setLoading(false);
     }
@@ -118,8 +116,8 @@ export default function Login() {
             <TextField
               fullWidth
               margin="normal"
-              id="documento"
-              label="Número de documento"
+              id="mail"
+              label="Email"
               variant="outlined"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -161,7 +159,7 @@ export default function Login() {
 
             <FormControlLabel
               control={<Checkbox id="recordar" />}
-              label="Recordar el número de documento"
+              label="Recordar el mail"
             />
 
             <Box display="flex" justifyContent="center" mt={2}>
