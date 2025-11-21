@@ -29,6 +29,7 @@ export default function Login() {
     setLoading(true);
     setError("");
 
+    console.log("Submitting login with inputs:", inputs);
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
@@ -111,10 +112,10 @@ export default function Login() {
             <TextField
               fullWidth
               margin="normal"
-              id="mail"
+              id="email"
               label="Email"
               variant="outlined"
-              onChange={(e) => setInputs({ ...inputs, mail: e.target.value })}
+              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
             />
 
             <TextField
@@ -156,7 +157,7 @@ export default function Login() {
 
             <FormControlLabel
               control={<Checkbox id="recordar" />}
-              label="Recordar el mail"
+              label="Recordar el Email"
             />
 
             <Box display="flex" justifyContent="center" mt={2}>
