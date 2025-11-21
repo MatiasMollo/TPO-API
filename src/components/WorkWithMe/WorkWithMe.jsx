@@ -66,7 +66,7 @@ const WorkWithMe = () => {
       console.log("Obtuve citas:", response.data);
       setCitasOcupadas(response.data.citas);
     } catch (err) {
-      setError(
+      setWarning(
         "Tuvimos un problema obteniendo las citas reservadas. Es posible que algunos horarios mostrados ya no estén disponibles."
       );
       console.log(err);
@@ -266,11 +266,7 @@ const WorkWithMe = () => {
                   shouldDisableDate={(day) => {
                     const weekday = day.day(); // 0 domingo, 6 sábado
                     if (weekday === 0 || weekday === 6) return true;
-                    if (
-                      day.isBefore(dayjs(), "day") ||
-                      day.isSame(dayjs(), "day")
-                    )
-                      return true;
+                    if (day.isBefore(dayjs(), "day")) return true;
                     return false;
                   }}
                 />
