@@ -19,11 +19,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [inputs, setInputs] = useState({});
   const [error, setError] = useState("");
 
   async function handleLoginSubmit(e) {
@@ -34,10 +32,7 @@ export default function Login() {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
-        {
-          email,
-          password,
-        }
+        inputs
       );
 
       console.log("Login successful:", response.data);
@@ -119,7 +114,7 @@ export default function Login() {
               id="mail"
               label="Email"
               variant="outlined"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setInputs({ ...inputs, mail: e.target.value })}
             />
 
             <TextField
@@ -129,7 +124,9 @@ export default function Login() {
               label="Contraseña"
               type={showPassword ? "text" : "password"}
               variant="outlined"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setInputs({ ...inputs, password: e.target.value })
+              }
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
