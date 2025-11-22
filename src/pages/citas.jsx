@@ -234,7 +234,7 @@ export default function Citas() {
                           sx={{ fontSize: "0.7rem" }}
                           disabled
                         >
-                          No hay pendientes
+                          Sin pendientes
                         </Button>
                       )}
                     </TableCell>
