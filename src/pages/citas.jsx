@@ -156,7 +156,7 @@ export default function Citas() {
                     align="center"
                     style={{ padding: "1.5em", backgroundColor: "#f9f9f9" }}
                   >
-                    Todavía no hay citas programadas
+                    No se encontraron citas programadas.
                   </TableCell>
                 </TableRow>
               ) : (

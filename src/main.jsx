@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Login from "./pages/login";
-import "./index.css";
 import Citas from "./pages/citas";
 import ObrasSociales from "./pages/obrasSociales";
 import Layout from "./components/Layout/Layout";

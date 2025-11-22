@@ -30,7 +30,6 @@ import {
   getObrasSociales,
 } from "../service/obrasSocialesService";
 
-// Yup validation schema
 const validationSchema = Yup.object({
   prestador: Yup.string()
     .matches(/^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/, "Solo se permiten letras y espacios.")
