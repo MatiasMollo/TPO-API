@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { cancelarCita, confirmarCita, getCitas } from "../service/citasService";
+import dayjs from "dayjs";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
@@ -179,9 +180,25 @@ export default function Citas() {
                       {cita.estado === "pendiente" && (
                         <Chip label="Sin confirmar" size="small" />
                       )}
-                      {cita.estado === "confirmado" && (
-                        <Chip label="Confirmada" color="primary" size="small" />
-                      )}
+
+                      {/* Si ya pasó el día de la cita, la marco como realizada */}
+                      {cita.estado === "confirmado" &&
+                        (dayjs(cita.fecha).isBefore(dayjs(), "day") ? (
+                          <Chip
+                            label="Realizada"
+                            color="primary"
+                            size="small"
+                            disabled
+                          />
+                        ) : (
+                          <Chip
+                            label="Confirmada"
+                            color="primary"
+                            size="small"
+                          />
+                        ))}
+
+                      {/* estado cancelado */}
                       {cita.estado === "cancelado" && (
                         <Chip label="Cancelada" color="error" size="small" />
                       )}
