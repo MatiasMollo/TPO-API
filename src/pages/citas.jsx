@@ -194,7 +194,7 @@ export default function Citas() {
                       {cita.motivo}
                     </TableCell>
                     <TableCell align="center">
-                      {cita.estado === "pendiente" ? (
+                      {cita.estado === "pendiente" && (
                         <span
                           style={{
                             display: "flex",
@@ -212,17 +212,20 @@ export default function Citas() {
                           >
                             Confirmar
                           </Button>
-
-                          <Button
-                            variant="contained"
-                            color="error"
-                            size="small"
-                            onClick={() => handleCancelar(idx + 1)}
-                            sx={{ fontSize: "0.7rem" }}
-                          >
-                            Cancelar
-                          </Button>
                         </span>
+                      )}
+
+                      {cita.estado === "pendiente" ||
+                      cita.estado === "confirmado" ? (
+                        <Button
+                          variant="contained"
+                          color="error"
+                          size="small"
+                          onClick={() => handleCancelar(idx + 1)}
+                          sx={{ fontSize: "0.7rem" }}
+                        >
+                          Cancelar
+                        </Button>
                       ) : (
                         <Button
                           variant="contained"
