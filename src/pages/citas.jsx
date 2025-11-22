@@ -23,13 +23,15 @@ import { useEffect, useState } from "react";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
+  const [estado, setEstado] = useState("");
+  const [fecha, setFecha] = useState("");
 
-  async function filtrarCitas({ estado, fecha }) {
+  async function filtrarCitas() {
     try {
       const response = await axios.get("http://localhost:3000/api/citas", {
         params: {
-          estado: estado || "",
-          fecha: fecha || "",
+          estado: estado,
+          fecha: fecha,
         },
       });
 
@@ -92,6 +94,10 @@ export default function Citas() {
     getCitas();
   }, []);
 
+  useEffect(() => {
+    filtrarCitas();
+  }, [estado, fecha]);
+
   return (
     <Container
       maxWidth="lg"
@@ -134,7 +140,9 @@ export default function Citas() {
             <Select
               label="Estado"
               defaultValue=""
-              onChange={(e) => filtrarCitas({ estado: e.target.value })}
+              onChange={(e) => {
+                setEstado(e.target.value);
+              }}
             >
               <MenuItem value="">Todos los estados</MenuItem>
               <MenuItem value="pendiente">Sin confirmar</MenuItem>
@@ -146,7 +154,7 @@ export default function Citas() {
             <TextField
               type="date"
               size="small"
-              onChange={(e) => filtrarCitas({ fecha: e.target.value })}
+              onChange={(e) => setFecha(e.target.value)}
             />
           </FormControl>
         </Box>

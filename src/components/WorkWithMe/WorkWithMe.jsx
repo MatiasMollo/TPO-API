@@ -267,6 +267,7 @@ const WorkWithMe = () => {
                     const weekday = day.day(); // 0 domingo, 6 sábado
                     if (weekday === 0 || weekday === 6) return true;
                     if (day.isBefore(dayjs(), "day")) return true;
+                    if (day.isAfter(dayjs().add(2, "week"), "day")) return true;
                     return false;
                   }}
                 />
