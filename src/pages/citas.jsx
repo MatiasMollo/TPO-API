@@ -24,6 +24,22 @@ import { useEffect, useState } from "react";
 export default function Citas() {
   const [citas, setCitas] = useState([]);
 
+  async function filtrarCitas({ estado, fecha }) {
+    try {
+      const response = await axios.get("http://localhost:3000/api/citas", {
+        params: {
+          estado: estado || "",
+          fecha: fecha || "",
+        },
+      });
+
+      console.log("filtré citas:", response.data);
+      setCitas(response.data.citas);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function getCitas() {
     try {
       const response = await axios.get("http://localhost:3000/api/citas");
@@ -115,7 +131,11 @@ export default function Citas() {
           />
           <FormControl size="small" sx={{ minWidth: 200 }}>
             <InputLabel>Estado</InputLabel>
-            <Select label="Estado" defaultValue="">
+            <Select
+              label="Estado"
+              defaultValue=""
+              onChange={(e) => filtrarCitas({ estado: e.target.value })}
+            >
               <MenuItem value="">Todos los estados</MenuItem>
               <MenuItem value="pendiente">Sin confirmar</MenuItem>
               <MenuItem value="confirmado">Confirmada</MenuItem>
@@ -123,10 +143,15 @@ export default function Citas() {
             </Select>
           </FormControl>
           <FormControl size="small" sx={{ minWidth: 200 }}>
-            <TextField type="date" size="small" />
+            <TextField
+              type="date"
+              size="small"
+              onChange={(e) => filtrarCitas({ fecha: e.target.value })}
+            />
           </FormControl>
         </Box>
       </Paper>
+
       {/* Tabla de citas */}
       <Paper elevation={4} sx={{ p: 3 }}>
         <Typography
