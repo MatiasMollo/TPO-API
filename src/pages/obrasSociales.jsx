@@ -30,11 +30,6 @@ const validationSchema = Yup.object({
   prestador: Yup.string()
     .matches(/^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/, "Solo se permiten letras y espacios.")
     .required("El nombre del prestador es obligatorio"),
-  numeroAfiliado: Yup.string().matches(
-    /^[a-zA-Z0-9]+$/,
-    "Solo se permiten letras y números."
-  ),
-  // .required("El número de afiliado es obligatorio"),
 });
 
 const ObrasSociales = () => {
@@ -43,7 +38,6 @@ const ObrasSociales = () => {
 
   const [openAddEditDialog, setOpenAddEditDialog] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-
   const [editingObraSocial, setEditingObraSocial] = useState(null);
   const [obraSocialToDelete, setObraSocialToDelete] = useState(null);
 
@@ -64,6 +58,7 @@ const ObrasSociales = () => {
     );
     getObrasSociales();
   }
+
   async function editarObraSocial(values) {
     await axios.put(
       `http://localhost:3000/api/obraSocial/${editingObraSocial.id}`,
@@ -73,7 +68,14 @@ const ObrasSociales = () => {
     getObrasSociales();
   }
 
-  async function handleEliminarObraSocial() {
+  const handleSave = async (values) => {
+    if (editingObraSocial) await editarObraSocial(values);
+    else await crearObraSocial(values);
+
+    handleCloseAddEditDialog();
+  };
+
+  async function handleDeleteConfirmed() {
     try {
       await axios.delete(
         `http://localhost:3000/api/obraSocial/${obraSocialToDelete}`,
@@ -81,15 +83,13 @@ const ObrasSociales = () => {
           headers: { Authorization: `Bearer ${jwt}` },
         }
       );
-
-      setObrasSociales(
-        obrasSociales.filter((os) => os.id !== obraSocialToDelete)
-      );
-
       handleCloseConfirmDialog();
     } catch (err) {
       console.log(err);
     }
+
+    getObrasSociales(); //refresh
+    handleCloseConfirmDialog();
   }
 
   // Modal para editar obra social
@@ -101,18 +101,7 @@ const ObrasSociales = () => {
     setOpenAddEditDialog(false);
     setEditingObraSocial(null);
   };
-
-  const handleSave = async (values) => {
-    if (editingObraSocial) {
-      await editarObraSocial(values);
-    } else {
-      await crearObraSocial(values);
-    }
-    handleCloseAddEditDialog();
-  };
-
-  // Cuando abro modal para eliminar, guardo el id de la obra social a eliminar.
-  // Cuando lo cierro, limpio ese estado.
+  // Modal para confirmar eliminación
   const handleOpenConfirmDialog = (id) => {
     setObraSocialToDelete(id);
     setOpenConfirmDialog(true);
@@ -122,14 +111,8 @@ const ObrasSociales = () => {
     setObraSocialToDelete(null);
   };
 
-  // Confirmación de eliminación
-  const handleDeleteConfirmed = () => {
-    handleEliminarObraSocial();
-    getObrasSociales(); //refresh
-    handleCloseConfirmDialog();
-  };
-
   useEffect(() => {
+    //1er get
     getObrasSociales();
   }, []);
 
@@ -143,31 +126,33 @@ const ObrasSociales = () => {
       }}
     >
       <Paper sx={{ p: 3, m: 2, border: "1px solid #e0e0e0", boxShadow: 4 }}>
-        <Box display={"flex"} justifyContent={"space-between"}>
-          <Typography
-            variant="h5"
-            fontWeight={700}
-            align="left"
-            marginBottom={3}
-          >
+        {/* Header */}
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          type="header"
+          mb={3}
+        >
+          <Typography variant="h5" fontWeight={700} align="left">
             Mis Obras Sociales
           </Typography>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => handleOpenAddEditDialog()}
-            sx={{ mb: 5, backgroundColor: "#01819d" }}
+            sx={{ backgroundColor: "#01819d" }}
           >
             Agregar Obra Social
           </Button>
         </Box>
+
+        {/* Tabla de obras sociales */}
         <TableContainer>
           <Table aria-label="tabla de obras sociales" size="small">
             <TableHead>
               <TableRow>
                 <TableCell>Opción</TableCell>
                 <TableCell>Prestador</TableCell>
-                <TableCell>Número de Afiliado</TableCell>
                 <TableCell align="right">Modificar/Eliminar</TableCell>
               </TableRow>
             </TableHead>
@@ -176,7 +161,6 @@ const ObrasSociales = () => {
                 <TableRow key={os.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{os.nombre}</TableCell>
-                  <TableCell> Poner campo en back </TableCell>
                   <TableCell align="right">
                     <IconButton onClick={() => handleOpenAddEditDialog(os)}>
                       <EditIcon />
@@ -193,6 +177,7 @@ const ObrasSociales = () => {
             </TableBody>
           </Table>
         </TableContainer>
+
         {/* Add/Edit Dialog */}
         <Dialog open={openAddEditDialog} onClose={handleCloseAddEditDialog}>
           <DialogTitle>
@@ -201,9 +186,6 @@ const ObrasSociales = () => {
           <Formik
             initialValues={{
               prestador: editingObraSocial ? editingObraSocial.nombre : "",
-              // numeroAfiliado: editingObraSocial
-              //   ? editingObraSocial.numero_afiliado ?? ""
-              //   : "",
             }}
             enableReinitialize
             validationSchema={validationSchema}
@@ -218,7 +200,7 @@ const ObrasSociales = () => {
               touched,
             }) => (
               <form onSubmit={handleSubmit}>
-                <DialogContent>
+                <DialogContent sx={{ minWidth: 400 }}>
                   <TextField
                     autoFocus
                     margin="dense"
@@ -234,26 +216,10 @@ const ObrasSociales = () => {
                     helperText={touched.prestador && errors.prestador}
                     sx={{ mb: 2 }}
                   />
-
-                  <TextField
-                    margin="dense"
-                    name="numeroAfiliado"
-                    label="Número de Afiliado"
-                    type="text"
-                    fullWidth
-                    variant="outlined"
-                    // value={values.numeroAfiliado}
-                    // onChange={handleChange}
-                    // onBlur={handleBlur}
-                    // error={touched.numeroAfiliado && !!errors.numeroAfiliado}
-                    helperText={"Este campo todavía no está en el backend"}
-                    disabled
-                  />
                 </DialogContent>
 
                 <DialogActions>
                   <Button onClick={handleCloseAddEditDialog}>Cancelar</Button>
-
                   <Button type="submit" variant="contained">
                     Guardar
                   </Button>
@@ -262,6 +228,7 @@ const ObrasSociales = () => {
             )}
           </Formik>
         </Dialog>
+
         {/* Deletion Confirmation Dialog */}
         <Dialog open={openConfirmDialog} onClose={handleCloseConfirmDialog}>
           <DialogTitle>Confirmar Eliminación</DialogTitle>
