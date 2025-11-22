@@ -13,9 +13,9 @@ import {
   Card,
   Alert,
 } from "@mui/material";
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../service/authService";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,24 +24,20 @@ export default function Login() {
   const [inputs, setInputs] = useState({});
   const [error, setError] = useState("");
 
-  async function handleLoginSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    console.log("Submitting login with inputs:", inputs);
+  async function handleLogin(e) {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        inputs
-      );
+      e.preventDefault();
+      setLoading(true);
+      setError("");
 
-      console.log("Login successful:", response.data);
+      let response = await login(inputs);
       localStorage.setItem("authToken", response.data.token);
       navigate("/citas");
     } catch (err) {
-      if (err.response.data.error) setError(err.response.data.error);
-      else if (err.response.data.message) setError(err.response.data.message);
+      console.log("error al cancelar:", err);
+
+      if (err.response?.data?.error) setError(err.response.data.error);
+      else if (err.response?.data?.message) setError(err.response.data.message);
       else
         setError(
           "Ocurrió un error a la hora de realizar el login. Por favor, reintente más tarde."
@@ -162,7 +158,7 @@ export default function Login() {
 
             <Box display="flex" justifyContent="center" mt={2}>
               <Button
-                onClick={handleLoginSubmit}
+                onClick={handleLogin}
                 variant="contained"
                 disabled={loading}
                 sx={{

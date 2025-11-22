@@ -23,7 +23,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import {
+  crearObraSocial,
+  editarObraSocial,
+  eliminarObraSocial,
+  getObrasSociales,
+} from "../service/obrasSocialesService";
 
 // Yup validation schema
 const validationSchema = Yup.object({
@@ -33,7 +38,6 @@ const validationSchema = Yup.object({
 });
 
 const ObrasSociales = () => {
-  const jwt = localStorage.getItem("authToken");
   const [obrasSociales, setObrasSociales] = useState([]);
 
   const [openAddEditDialog, setOpenAddEditDialog] = useState(false);
@@ -41,58 +45,51 @@ const ObrasSociales = () => {
   const [editingObraSocial, setEditingObraSocial] = useState(null);
   const [obraSocialToDelete, setObraSocialToDelete] = useState(null);
 
-  async function getObrasSociales() {
+  async function handleGetObrasSociales() {
     try {
-      const response = await axios.get("http://localhost:3000/api/obraSocial");
+      const response = await getObrasSociales();
       setObrasSociales(response.data.obras_sociales);
     } catch (err) {
       console.log(err);
     }
   }
 
-  async function crearObraSocial(values) {
-    await axios.post(
-      "http://localhost:3000/api/obraSocial",
-      { nombre: values.prestador },
-      { headers: { Authorization: `Bearer ${jwt}` } }
-    );
-    getObrasSociales();
-  }
-
-  async function editarObraSocial(values) {
-    await axios.put(
-      `http://localhost:3000/api/obraSocial/${editingObraSocial.id}`,
-      { nombre: values.prestador },
-      { headers: { Authorization: `Bearer ${jwt}` } }
-    );
-    getObrasSociales();
-  }
-
-  const handleSave = async (values) => {
-    if (editingObraSocial) await editarObraSocial(values);
-    else await crearObraSocial(values);
-
-    handleCloseAddEditDialog();
-  };
-
-  async function handleDeleteConfirmed() {
+  async function handleCrearObraSocial(values) {
     try {
-      await axios.delete(
-        `http://localhost:3000/api/obraSocial/${obraSocialToDelete}`,
-        {
-          headers: { Authorization: `Bearer ${jwt}` },
-        }
-      );
+      await crearObraSocial(values.prestador);
+      handleGetObrasSociales();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleEliminarObraSocial(id) {
+    try {
+      await eliminarObraSocial(id);
+      await handleGetObrasSociales();
       handleCloseConfirmDialog();
     } catch (err) {
       console.log(err);
     }
-
-    getObrasSociales(); //refresh
-    handleCloseConfirmDialog();
   }
 
-  // Modal para editar obra social
+  async function handleEditarObraSocial(values) {
+    try {
+      await editarObraSocial(editingObraSocial.id, values.prestador);
+      handleGetObrasSociales();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleSave = async (values) => {
+    if (editingObraSocial) handleEditarObraSocial(values);
+    else handleCrearObraSocial(values);
+
+    handleCloseAddEditDialog();
+  };
+
+  // Manejo modales
   const handleOpenAddEditDialog = (obraSocial = null) => {
     setEditingObraSocial(obraSocial);
     setOpenAddEditDialog(true);
@@ -101,7 +98,6 @@ const ObrasSociales = () => {
     setOpenAddEditDialog(false);
     setEditingObraSocial(null);
   };
-  // Modal para confirmar eliminación
   const handleOpenConfirmDialog = (id) => {
     setObraSocialToDelete(id);
     setOpenConfirmDialog(true);
@@ -112,8 +108,7 @@ const ObrasSociales = () => {
   };
 
   useEffect(() => {
-    //1er get
-    getObrasSociales();
+    handleGetObrasSociales();
   }, []);
 
   return (
@@ -241,7 +236,7 @@ const ObrasSociales = () => {
           <DialogActions>
             <Button onClick={handleCloseConfirmDialog}>Cancelar</Button>
             <Button
-              onClick={handleDeleteConfirmed}
+              onClick={() => handleEliminarObraSocial(obraSocialToDelete)}
               color="error"
               variant="contained"
             >

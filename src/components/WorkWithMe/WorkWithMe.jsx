@@ -17,8 +17,9 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/es";
-import axios from "axios";
 import dayjs from "dayjs";
+import { crearCita, getCitas } from "../../service/citasService";
+import { getObrasSociales } from "../../service/obrasSocialesService";
 
 const WorkWithMe = () => {
   const [loading, setLoading] = useState(false);
@@ -50,25 +51,21 @@ const WorkWithMe = () => {
     });
   }
 
-  async function getObrasSociales() {
+  async function handleGetObrasSociales() {
     try {
-      const response = await axios.get("http://localhost:3000/api/obraSocial");
+      const response = await getObrasSociales();
       setObrasSociales(response.data.obras_sociales);
     } catch (err) {
       console.log(err);
     }
   }
 
-  //get de citas disponibles ocupadas. Si se ocupa, lo quito de los horarios disponibles
-  async function getCitas() {
+  async function handleGetCitas() {
     try {
-      const response = await axios.get("http://localhost:3000/api/citas");
-      console.log("Obtuve citas:", response.data);
-      setCitasOcupadas(response.data.citas);
+      const citas = await getCitas();
+      setCitasOcupadas(citas);
     } catch (err) {
-      setWarning(
-        "Tuvimos un problema obteniendo las citas reservadas. Es posible que algunos horarios mostrados ya no estén disponibles."
-      );
+      setWarning("Tuvimos un problema obteniendo las citas reservadas.");
       console.log(err);
     }
   }
@@ -98,34 +95,31 @@ const WorkWithMe = () => {
   }
 
   useEffect(() => {
-    getObrasSociales();
-    getCitas();
+    handleGetObrasSociales();
+    handleGetCitas();
   }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(inputs);
-
     setLoading(true);
     setError("");
 
     try {
-      //convierto fecha a formato YYYY-MM-DD
-      const response = await axios.post("http://localhost:3000/api/citas", {
+      const cita = await crearCita({
         ...inputs,
         fecha: inputs.fecha.format("YYYY-MM-DD"),
       });
 
-      console.log("Cita creada:", response.data);
+      console.log("Cita creada:", cita);
 
-      //vuelvo a obtener citas para actualizar horarios disponibles
-      getCitas();
+      await handleGetCitas(); // refrescamos horarios
       resetFormulario();
       setOpenSnackbar(true);
     } catch (err) {
       console.log(err);
-      if (err.response.data.error) setError(err.response.data.error);
-      else if (err.response.data.message) setError(err.response.data.message);
+
+      if (err.response?.data?.error) setError(err.response.data.error);
+      else if (err.response?.data?.message) setError(err.response.data.message);
       else
         setError(
           "Ocurrió un error a la hora de reservar la cita. Por favor, reintente más tarde."
@@ -178,7 +172,7 @@ const WorkWithMe = () => {
               margin: "1em 0em",
             }}
           >
-            {error}
+            {warning}
           </Alert>
         )}
 

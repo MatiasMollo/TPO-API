@@ -18,84 +18,47 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { cancelarCita, confirmarCita, getCitas } from "../service/citasService";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
   const [estado, setEstado] = useState("");
   const [fecha, setFecha] = useState("");
 
-  async function filtrarCitas() {
+  async function cargarCitasConFiltros() {
     try {
-      const response = await axios.get("http://localhost:3000/api/citas", {
-        params: {
-          estado: estado,
-          fecha: fecha,
-        },
-      });
-
-      console.log("filtré citas:", response.data);
-      setCitas(response.data.citas);
+      const data = await getCitas({ estado, fecha });
+      setCitas(data);
     } catch (err) {
       console.log(err);
     }
   }
 
-  async function getCitas() {
+  async function handleConfirmar(id) {
     try {
-      const response = await axios.get("http://localhost:3000/api/citas");
-      console.log("Obtuve citas:", response.data);
-      setCitas(response.data.citas);
+      await confirmarCita(id);
+      cargarCitasConFiltros();
     } catch (err) {
-      console.log(err);
+      console.log("error al confirmar:", err);
     }
   }
 
-  async function confirmarCita(index) {
+  async function handleCancelar(id) {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/api/citas/${index}/confirm`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        }
-      );
-
-      console.log("confirmé cita:", response.data);
-      getCitas();
+      await cancelarCita(id);
+      cargarCitasConFiltros();
     } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function cancelarCita(index) {
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/api/citas/${index}/cancel`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        }
-      );
-
-      console.log("cancelé cita:", response.data);
-      getCitas();
-    } catch (err) {
-      console.log(err);
+      console.log("error al cancelar:", err);
     }
   }
 
   useEffect(() => {
-    getCitas();
+    cargarCitasConFiltros();
   }, []);
 
   useEffect(() => {
-    filtrarCitas();
+    cargarCitasConFiltros();
   }, [estado, fecha]);
 
   return (
@@ -244,7 +207,7 @@ export default function Citas() {
                             variant="contained"
                             color="success"
                             size="small"
-                            onClick={() => confirmarCita(idx + 1)}
+                            onClick={() => handleConfirmar(idx + 1)}
                             sx={{ fontSize: "0.7rem" }}
                           >
                             Confirmar
@@ -254,7 +217,7 @@ export default function Citas() {
                             variant="contained"
                             color="error"
                             size="small"
-                            onClick={() => cancelarCita(idx + 1)}
+                            onClick={() => handleCancelar(idx + 1)}
                             sx={{ fontSize: "0.7rem" }}
                           >
                             Cancelar
