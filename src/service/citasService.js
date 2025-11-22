@@ -7,8 +7,13 @@ function authHeader() {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-export async function getCitas(params = {}) {
-  const res = await axios.get(api, { params });
+export async function getCitas(params = {}, isJwt = false) {
+  const config = { params };
+  if (isJwt) {
+    config.headers = authHeader();
+  }
+
+  const res = await axios.get(api, config);
   return res.data.citas;
 }
 

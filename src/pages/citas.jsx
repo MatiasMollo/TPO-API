@@ -1,4 +1,4 @@
-import { FunnelIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import {
   Box,
   Button,
@@ -25,10 +25,11 @@ export default function Citas() {
   const [citas, setCitas] = useState([]);
   const [estado, setEstado] = useState("");
   const [fecha, setFecha] = useState("");
+  const [nombre, setNombre] = useState("");
 
   async function cargarCitasConFiltros() {
     try {
-      const data = await getCitas({ estado, fecha });
+      const data = await getCitas({ estado, fecha, nombre }, true);
       setCitas(data);
     } catch (err) {
       console.log(err);
@@ -59,7 +60,7 @@ export default function Citas() {
 
   useEffect(() => {
     cargarCitasConFiltros();
-  }, [estado, fecha]);
+  }, [estado, fecha, nombre]);
 
   return (
     <Container
@@ -87,7 +88,15 @@ export default function Citas() {
 
       {/* Filtros */}
       <Paper elevation={4} sx={{ mb: 4, p: 3 }}>
-        <Typography variant="subtitle1" fontWeight={600} mb={2} align="start">
+        <Typography
+          variant="subtitle1"
+          fontWeight={600}
+          mb={2}
+          align="start"
+          display="flex"
+          alignItems="center"
+          gap={1}
+        >
           <FunnelIcon width="15"></FunnelIcon>
           Filtros
         </Typography>
@@ -97,6 +106,7 @@ export default function Citas() {
             label="Nombre del paciente"
             variant="outlined"
             sx={{ minWidth: 220 }}
+            onChange={(e) => setNombre(e.target.value)}
           />
           <FormControl size="small" sx={{ minWidth: 200 }}>
             <InputLabel>Estado</InputLabel>
@@ -162,7 +172,7 @@ export default function Citas() {
               ) : (
                 citas.map((cita, idx) => (
                   <TableRow key={idx}>
-                    <TableCell align="center">{cita.paciente}</TableCell>
+                    <TableCell align="center">{cita.cliente.nombre}</TableCell>
                     <TableCell align="center">{cita.fecha}</TableCell>
                     <TableCell align="center">{cita.hora}</TableCell>
                     <TableCell align="center">
@@ -177,10 +187,11 @@ export default function Citas() {
                       )}
                     </TableCell>
                     <TableCell align="center">
-                      {cita.contacto}
+                      <PhoneIcon width="15" />
+                      {cita.cliente.telefono}
                       <br />
                       <Typography variant="caption" color="text.secondary">
-                        {cita.email}
+                        {cita.cliente.email}
                       </Typography>
                     </TableCell>
                     <TableCell
