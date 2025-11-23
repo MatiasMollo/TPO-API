@@ -155,7 +155,7 @@ const WorkWithMe = () => {
       >
         <Typography
           variant="h2"
-          sx={{ marginLeft: "-0.05em", lineHeight: 0.9, mb: 1.5 }}
+          sx={{ marginLeft: "-0.05em", lineHeight: 0.9 }}
         >
           Solicite una cita
         </Typography>

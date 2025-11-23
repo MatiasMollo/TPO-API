@@ -46,9 +46,7 @@ const Services = () => {
         sx={{ paddingLeft: "4em", textAlign: "left" }}
         paddingRight={7}
       >
-        <Typography variant="h2" gutterBottom>
-          Mis servicios
-        </Typography>
+        <Typography variant="h2">Mis servicios</Typography>
         {servicesData.map((service, index) => (
           <ServiceItem
             key={index}
