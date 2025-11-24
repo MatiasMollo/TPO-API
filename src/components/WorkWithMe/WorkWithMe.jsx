@@ -163,32 +163,29 @@ const WorkWithMe = () => {
           Reservá un turno conmigo, completando los siguientes datos:
         </Typography>
 
-        {/* Mensajes error */}
-        {warning && (
-          <Alert
-            severity="warning"
-            sx={{
-              width: "92%",
-              margin: "1em 0em",
-            }}
-          >
-            {warning}
-          </Alert>
-        )}
-
-        {error && (
-          <Alert
-            severity="error"
-            sx={{
-              width: "92%",
-              margin: "1em 0em",
-            }}
-          >
-            {error}
-          </Alert>
-        )}
-
         <Box maxWidth={{ xs: "100%", md: "530px" }}>
+          {/* Mensajes error */}
+          {warning && (
+            <Alert
+              severity="warning"
+              sx={{
+                margin: "1em 0em",
+              }}
+            >
+              {warning}
+            </Alert>
+          )}
+          {error && (
+            <Alert
+              severity="error"
+              sx={{
+                margin: "1em 0em",
+              }}
+            >
+              {error}
+            </Alert>
+          )}
+
           <form onSubmit={handleSubmit}>
             <Box
               sx={{

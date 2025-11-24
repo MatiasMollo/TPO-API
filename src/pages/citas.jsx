@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { cancelarCita, confirmarCita, getCitas } from "../service/citasService";
-import dayjs from "dayjs";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
@@ -101,22 +100,30 @@ export default function Citas() {
           <FunnelIcon width="15"></FunnelIcon>
           Filtros
         </Typography>
-        <Box display="flex" gap={2} flexWrap="wrap">
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexWrap: "wrap",
+          }}
+        >
           <TextField
             size="small"
             label="Nombre del paciente"
             variant="outlined"
-            sx={{ minWidth: 220 }}
             onChange={(e) => setNombre(e.target.value)}
+            sx={{ width: { xs: "100%", md: "auto" }, minWidth: 220 }}
           />
-          <FormControl size="small" sx={{ minWidth: 200 }}>
+
+          <FormControl
+            size="small"
+            sx={{ width: { xs: "100%", md: "auto" }, minWidth: 200 }}
+          >
             <InputLabel>Estado</InputLabel>
             <Select
               label="Estado"
               defaultValue=""
-              onChange={(e) => {
-                setEstado(e.target.value);
-              }}
+              onChange={(e) => setEstado(e.target.value)}
             >
               <MenuItem value="">Todos los estados</MenuItem>
               <MenuItem value="pendiente">Sin confirmar</MenuItem>
@@ -124,7 +131,11 @@ export default function Citas() {
               <MenuItem value="cancelado">Cancelada</MenuItem>
             </Select>
           </FormControl>
-          <FormControl size="small" sx={{ minWidth: 200 }}>
+
+          <FormControl
+            size="small"
+            sx={{ width: { xs: "100%", md: "auto" }, minWidth: 200 }}
+          >
             <TextField
               type="date"
               size="small"
@@ -178,25 +189,12 @@ export default function Citas() {
                     <TableCell align="center">{cita.hora}</TableCell>
                     <TableCell align="center">
                       {cita.estado === "pendiente" && (
-                        <Chip label="Sin confirmar" size="small" />
+                        <Chip label="Solicitada" size="small" />
                       )}
 
-                      {/* Si ya pasó el día de la cita, la marco como realizada */}
-                      {cita.estado === "confirmado" &&
-                        (dayjs(cita.fecha).isBefore(dayjs(), "day") ? (
-                          <Chip
-                            label="Realizada"
-                            color="primary"
-                            size="small"
-                            disabled
-                          />
-                        ) : (
-                          <Chip
-                            label="Confirmada"
-                            color="primary"
-                            size="small"
-                          />
-                        ))}
+                      {cita.estado === "confirmado" && (
+                        <Chip label="Confirmada" color="primary" size="small" />
+                      )}
 
                       {/* estado cancelado */}
                       {cita.estado === "cancelado" && (
@@ -222,15 +220,15 @@ export default function Citas() {
                       {cita.motivo}
                     </TableCell>
                     <TableCell align="center">
-                      {cita.estado === "pendiente" && (
-                        <span
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            justifyContent: "center",
-                          }}
-                        >
+                      <span
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.5rem",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {cita.estado === "pendiente" && (
                           <Button
                             variant="contained"
                             color="success"
@@ -240,30 +238,30 @@ export default function Citas() {
                           >
                             Confirmar
                           </Button>
-                        </span>
-                      )}
+                        )}
 
-                      {cita.estado === "pendiente" ||
-                      cita.estado === "confirmado" ? (
-                        <Button
-                          variant="contained"
-                          color="error"
-                          size="small"
-                          onClick={() => handleCancelar(idx + 1)}
-                          sx={{ fontSize: "0.7rem" }}
-                        >
-                          Cancelar
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{ fontSize: "0.7rem" }}
-                          disabled
-                        >
-                          Sin pendientes
-                        </Button>
-                      )}
+                        {cita.estado === "pendiente" ||
+                        cita.estado === "confirmado" ? (
+                          <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            onClick={() => handleCancelar(idx + 1)}
+                            sx={{ fontSize: "0.7rem" }}
+                          >
+                            Cancelar
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{ fontSize: "0.7rem" }}
+                            disabled
+                          >
+                            Sin pendientes
+                          </Button>
+                        )}
+                      </span>
                     </TableCell>
                   </TableRow>
                 ))

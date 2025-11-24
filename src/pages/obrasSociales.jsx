@@ -194,7 +194,12 @@ const ObrasSociales = () => {
               touched,
             }) => (
               <form onSubmit={handleSubmit}>
-                <DialogContent sx={{ minWidth: 400 }}>
+                <DialogContent
+                  sx={{
+                    width: { xs: 300, sm: 400 },
+                    maxWidth: "100%",
+                  }}
+                >
                   <TextField
                     autoFocus
                     margin="dense"
