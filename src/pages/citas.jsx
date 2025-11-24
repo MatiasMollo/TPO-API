@@ -47,7 +47,7 @@ export default function Citas() {
       await confirmarCita(id);
       cargarCitasConFiltros();
     } catch (err) {
-      console.log("error al confirmar:", err);
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export default function Citas() {
       await cancelarCita(id);
       cargarCitasConFiltros();
     } catch (err) {
-      console.log("error al cancelar:", err);
+      console.log(err);
     } finally {
       setLoading(false);
     }

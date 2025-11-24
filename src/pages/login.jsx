@@ -170,11 +170,6 @@ export default function Login() {
               }}
             />
 
-            <FormControlLabel
-              control={<Checkbox id="recordar" />}
-              label="Recordar el Email"
-            />
-
             <Box display="flex" justifyContent="center" mt={2}>
               <Button
                 type="submit"

@@ -90,8 +90,6 @@ const WorkWithMe = () => {
         fecha: values.fecha.format("YYYY-MM-DD"),
       });
 
-      console.log("Cita creada:", cita);
-
       await handleGetCitas(); // refrescamos horarios
       formik.resetForm();
       setOpenSnackbar(true);
@@ -116,7 +114,8 @@ const WorkWithMe = () => {
 
   const schema = Yup.object().shape({
     nombre: Yup.string()
-      .required("El nombre es obligatorio")
+      .required("El nombre y apellido son obligatorios")
+      .matches(/^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+$/, "Solo letras y espacios")
       .min(3, "Mínimo 3 caracteres"),
     telefono: Yup.string()
       .required("El teléfono es obligatorio")
