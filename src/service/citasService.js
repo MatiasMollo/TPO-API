@@ -3,7 +3,11 @@ import axios from "axios";
 const api = "http://localhost:3000/api/citas";
 
 function authHeader() {
-  const token = localStorage.getItem("authToken");
+  const token = document.cookie
+    .split("; ")
+    .find((c) => c.startsWith("authToken="))
+    ?.split("=")[1];
+
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 

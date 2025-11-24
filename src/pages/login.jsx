@@ -31,7 +31,9 @@ export default function Login() {
       setError("");
 
       let response = await login(inputs);
-      localStorage.setItem("authToken", response.data.token);
+      let token = response.data.token;
+      document.cookie = `authToken=${token}; path=/; secure; samesite=strict`;
+
       navigate("/citas");
     } catch (err) {
       console.log("error al cancelar:", err);
