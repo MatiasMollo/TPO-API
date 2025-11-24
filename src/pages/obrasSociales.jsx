@@ -17,6 +17,7 @@ import {
   TextField,
   Typography,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -43,41 +44,54 @@ const ObrasSociales = () => {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [editingObraSocial, setEditingObraSocial] = useState(null);
   const [obraSocialToDelete, setObraSocialToDelete] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleGetObrasSociales() {
     try {
+      setLoading(true);
       const response = await getObrasSociales();
       setObrasSociales(response.data.obras_sociales);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleCrearObraSocial(values) {
     try {
+      setLoading(true);
       await crearObraSocial(values.prestador);
       handleGetObrasSociales();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleEliminarObraSocial(id) {
     try {
+      setLoading(true);
       await eliminarObraSocial(id);
       await handleGetObrasSociales();
       handleCloseConfirmDialog();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleEditarObraSocial(values) {
     try {
+      setLoading(true);
       await editarObraSocial(editingObraSocial.id, values.prestador);
       handleGetObrasSociales();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -141,36 +155,52 @@ const ObrasSociales = () => {
         </Box>
 
         {/* Tabla de obras sociales */}
-        <TableContainer>
-          <Table aria-label="tabla de obras sociales" size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Opción</TableCell>
-                <TableCell>Prestador</TableCell>
-                <TableCell align="right">Modificar/Eliminar</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {obrasSociales.map((os, index) => (
-                <TableRow key={os.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{os.nombre}</TableCell>
-                  <TableCell align="right">
-                    <IconButton onClick={() => handleOpenAddEditDialog(os)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => handleOpenConfirmDialog(os.id)}
-                      color="error"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
+        {loading ? (
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              padding: "3em 0",
+            }}
+          >
+            <CircularProgress
+              sx={{ color: "rgb(1, 129, 157)" }}
+              variant="indeterminate"
+            />
+          </Box>
+        ) : (
+          <TableContainer>
+            <Table aria-label="tabla de obras sociales" size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Opción</TableCell>
+                  <TableCell>Prestador</TableCell>
+                  <TableCell align="right">Modificar/Eliminar</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {obrasSociales.map((os, index) => (
+                  <TableRow key={os.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{os.nombre}</TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => handleOpenAddEditDialog(os)}>
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => handleOpenConfirmDialog(os.id)}
+                        color="error"
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
 
         {/* Add/Edit Dialog */}
         <Dialog open={openAddEditDialog} onClose={handleCloseAddEditDialog}>

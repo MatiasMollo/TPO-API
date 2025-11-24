@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Container,
   FormControl,
   InputLabel,
@@ -26,31 +27,41 @@ export default function Citas() {
   const [estado, setEstado] = useState("");
   const [fecha, setFecha] = useState("");
   const [nombre, setNombre] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function cargarCitasConFiltros() {
     try {
+      setLoading(true);
       const data = await getCitas({ estado, fecha, nombre }, true);
       setCitas(data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleConfirmar(id) {
     try {
+      setLoading(true);
       await confirmarCita(id);
       cargarCitasConFiltros();
     } catch (err) {
       console.log("error al confirmar:", err);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleCancelar(id) {
     try {
+      setLoading(true);
       await cancelarCita(id);
       cargarCitasConFiltros();
     } catch (err) {
       console.log("error al cancelar:", err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -157,118 +168,140 @@ export default function Citas() {
         >
           Citas Médicas ({citas.length})
         </Typography>
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Paciente</TableCell>
-                <TableCell align="center">Fecha</TableCell>
-                <TableCell align="center">Hora</TableCell>
-                <TableCell align="center">Estado</TableCell>
-                <TableCell align="center">Contacto</TableCell>
-                <TableCell align="center">Notas</TableCell>
-                <TableCell align="center">Acciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {citas.length === 0 ? (
+        {loading ? (
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              padding: "3em 0",
+            }}
+          >
+            <CircularProgress
+              sx={{ color: "rgb(1, 129, 157)" }}
+              variant="indeterminate"
+            />
+          </Box>
+        ) : (
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
                 <TableRow>
-                  <TableCell
-                    colSpan={7}
-                    align="center"
-                    style={{ padding: "1.5em", backgroundColor: "#f9f9f9" }}
-                  >
-                    No se encontraron citas programadas.
-                  </TableCell>
+                  <TableCell align="center">Paciente</TableCell>
+                  <TableCell align="center">Fecha</TableCell>
+                  <TableCell align="center">Hora</TableCell>
+                  <TableCell align="center">Estado</TableCell>
+                  <TableCell align="center">Contacto</TableCell>
+                  <TableCell align="center">Notas</TableCell>
+                  <TableCell align="center">Acciones</TableCell>
                 </TableRow>
-              ) : (
-                citas.map((cita) => (
-                  <TableRow key={"cita" + cita.id}>
-                    <TableCell align="center">{cita.cliente.nombre}</TableCell>
-                    <TableCell align="center">{cita.fecha}</TableCell>
-                    <TableCell align="center">{cita.hora}</TableCell>
-                    <TableCell align="center">
-                      {cita.estado === "pendiente" && (
-                        <Chip label="Solicitada" size="small" />
-                      )}
-
-                      {cita.estado === "confirmado" && (
-                        <Chip label="Confirmada" color="primary" size="small" />
-                      )}
-
-                      {/* estado cancelado */}
-                      {cita.estado === "cancelado" && (
-                        <Chip label="Cancelada" color="error" size="small" />
-                      )}
-                    </TableCell>
-                    <TableCell align="center">
-                      <PhoneIcon width="15" />
-                      {cita.cliente.telefono}
-                      <br />
-                      <Typography variant="caption" color="text.secondary">
-                        {cita.cliente.email}
-                      </Typography>
-                    </TableCell>
+              </TableHead>
+              <TableBody>
+                {citas.length === 0 ? (
+                  <TableRow>
                     <TableCell
+                      colSpan={7}
                       align="center"
-                      sx={{
-                        maxWidth: "5em",
-                        overflowX: "auto",
-                        boxSizing: "border-box",
-                      }}
+                      style={{ padding: "1.5em", backgroundColor: "#f9f9f9" }}
                     >
-                      {cita.motivo}
-                    </TableCell>
-                    <TableCell align="center">
-                      <span
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "0.5rem",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {cita.estado === "pendiente" && (
-                          <Button
-                            variant="contained"
-                            color="success"
-                            size="small"
-                            onClick={() => handleConfirmar(cita.id)}
-                            sx={{ fontSize: "0.7rem" }}
-                          >
-                            Confirmar
-                          </Button>
-                        )}
-
-                        {cita.estado === "pendiente" ||
-                        cita.estado === "confirmado" ? (
-                          <Button
-                            variant="contained"
-                            color="error"
-                            size="small"
-                            onClick={() => handleCancelar(cita.id)}
-                            sx={{ fontSize: "0.7rem" }}
-                          >
-                            Cancelar
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="contained"
-                            size="small"
-                            sx={{ fontSize: "0.7rem" }}
-                            disabled
-                          >
-                            Sin pendientes
-                          </Button>
-                        )}
-                      </span>
+                      No se encontraron citas programadas.
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                ) : (
+                  citas.map((cita) => (
+                    <TableRow key={"cita" + cita.id}>
+                      <TableCell align="center">
+                        {cita.cliente.nombre}
+                      </TableCell>
+                      <TableCell align="center">{cita.fecha}</TableCell>
+                      <TableCell align="center">{cita.hora}</TableCell>
+                      <TableCell align="center">
+                        {cita.estado === "pendiente" && (
+                          <Chip label="Solicitada" size="small" />
+                        )}
+
+                        {cita.estado === "confirmado" && (
+                          <Chip
+                            label="Confirmada"
+                            color="primary"
+                            size="small"
+                          />
+                        )}
+
+                        {/* estado cancelado */}
+                        {cita.estado === "cancelado" && (
+                          <Chip label="Cancelada" color="error" size="small" />
+                        )}
+                      </TableCell>
+                      <TableCell align="center">
+                        <PhoneIcon width="15" />
+                        {cita.cliente.telefono}
+                        <br />
+                        <Typography variant="caption" color="text.secondary">
+                          {cita.cliente.email}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          maxWidth: "5em",
+                          overflowX: "auto",
+                          boxSizing: "border-box",
+                        }}
+                      >
+                        {cita.motivo}
+                      </TableCell>
+                      <TableCell align="center">
+                        <span
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.5rem",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {cita.estado === "pendiente" && (
+                            <Button
+                              variant="contained"
+                              color="success"
+                              size="small"
+                              onClick={() => handleConfirmar(cita.id)}
+                              sx={{ fontSize: "0.7rem" }}
+                            >
+                              Confirmar
+                            </Button>
+                          )}
+
+                          {cita.estado === "pendiente" ||
+                          cita.estado === "confirmado" ? (
+                            <Button
+                              variant="contained"
+                              color="error"
+                              size="small"
+                              onClick={() => handleCancelar(cita.id)}
+                              sx={{ fontSize: "0.7rem" }}
+                            >
+                              Cancelar
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              sx={{ fontSize: "0.7rem" }}
+                              disabled
+                            >
+                              Sin pendientes
+                            </Button>
+                          )}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
       </Paper>
     </Container>
   );
