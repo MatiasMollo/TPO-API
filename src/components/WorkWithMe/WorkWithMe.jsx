@@ -20,36 +20,17 @@ import "dayjs/locale/es";
 import dayjs from "dayjs";
 import { crearCita, getCitas } from "../../service/citasService";
 import { getObrasSociales } from "../../service/obrasSocialesService";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const WorkWithMe = () => {
   const [loading, setLoading] = useState(false);
-  const [inputs, setInputs] = useState({
-    nombre: "",
-    telefono: "",
-    email: "",
-    obra_social: "",
-    fecha: null,
-    hora: "",
-    motivo: "",
-  });
   const [error, setError] = useState("");
   const [warning, setWarning] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const [obrasSociales, setObrasSociales] = useState([]);
   const [citasOcupadas, setCitasOcupadas] = useState([]);
-
-  function resetFormulario() {
-    setInputs({
-      nombre: "",
-      telefono: "",
-      email: "",
-      obra_social: "",
-      fecha: null,
-      hora: "",
-      motivo: "",
-    });
-  }
 
   async function handleGetObrasSociales() {
     try {
@@ -99,21 +80,20 @@ const WorkWithMe = () => {
     handleGetCitas();
   }, []);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(values) {
     setLoading(true);
     setError("");
 
     try {
       const cita = await crearCita({
-        ...inputs,
-        fecha: inputs.fecha.format("YYYY-MM-DD"),
+        ...values,
+        fecha: values.fecha.format("YYYY-MM-DD"),
       });
 
       console.log("Cita creada:", cita);
 
       await handleGetCitas(); // refrescamos horarios
-      resetFormulario();
+      formik.resetForm();
       setOpenSnackbar(true);
     } catch (err) {
       console.log(err);
@@ -133,6 +113,41 @@ const WorkWithMe = () => {
     if (reason === "clickaway") return;
     setOpenSnackbar(false);
   };
+
+  const schema = Yup.object().shape({
+    nombre: Yup.string()
+      .required("El nombre es obligatorio")
+      .min(3, "Mínimo 3 caracteres"),
+    telefono: Yup.string()
+      .required("El teléfono es obligatorio")
+      .matches(/^\d+$/, "Solo números")
+      .min(8, "Mínimo 8 dígitos"),
+    email: Yup.string()
+      .required("El email es obligatorio")
+      .email("Email inválido"),
+    obra_social: Yup.string().required("Seleccione una obra social"),
+    fecha: Yup.date().required("Seleccione una fecha"),
+    hora: Yup.string().required("Seleccione un horario"),
+    motivo: Yup.string()
+      .required("Ingrese un motivo")
+      .min(10, "Mínimo 10 caracteres"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      nombre: "",
+      telefono: "",
+      email: "",
+      obra_social: "",
+      fecha: null,
+      hora: "",
+      motivo: "",
+    },
+    validationSchema: schema,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
 
   return (
     <Grid
@@ -186,51 +201,58 @@ const WorkWithMe = () => {
             </Alert>
           )}
 
-          <form onSubmit={handleSubmit}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-              }}
-            >
+          <form onSubmit={formik.handleSubmit}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <TextField
                 label="Nombre y apellido"
-                variant="outlined"
                 fullWidth
-                value={inputs.nombre}
-                onChange={(e) =>
-                  setInputs({ ...inputs, nombre: e.target.value })
-                }
+                name="nombre"
+                value={formik.values.nombre}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.nombre && Boolean(formik.errors.nombre)}
+                helperText={formik.touched.nombre && formik.errors.nombre}
               />
+
               <TextField
                 label="Teléfono"
-                variant="outlined"
                 fullWidth
+                name="telefono"
                 type="number"
-                value={inputs.telefono}
-                onChange={(e) =>
-                  setInputs({ ...inputs, telefono: e.target.value })
+                value={formik.values.telefono}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.telefono && Boolean(formik.errors.telefono)
                 }
+                helperText={formik.touched.telefono && formik.errors.telefono}
               />
+
               <TextField
                 label="Email"
-                variant="outlined"
                 fullWidth
-                value={inputs.email}
-                onChange={(e) =>
-                  setInputs({ ...inputs, email: e.target.value })
-                }
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
-              <FormControl fullWidth>
+
+              <FormControl
+                fullWidth
+                error={
+                  formik.touched.obra_social &&
+                  Boolean(formik.errors.obra_social)
+                }
+              >
                 <InputLabel>Obra social</InputLabel>
                 <Select
                   label="Obra social"
-                  value={inputs.obra_social}
-                  onChange={(e) => {
-                    console.log(e.target);
-                    setInputs({ ...inputs, obra_social: e.target.value });
-                  }}
+                  name="obra_social"
+                  value={formik.values.obra_social}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 >
                   {obrasSociales.map((obra) => (
                     <MenuItem key={obra.id} value={obra.id}>
@@ -238,6 +260,15 @@ const WorkWithMe = () => {
                     </MenuItem>
                   ))}
                 </Select>
+                {formik.touched.obra_social && formik.errors.obra_social && (
+                  <Typography
+                    variant="caption"
+                    color="error"
+                    marginLeft={"14px"}
+                  >
+                    {formik.errors.obra_social}
+                  </Typography>
+                )}
               </FormControl>
 
               <LocalizationProvider
@@ -246,47 +277,50 @@ const WorkWithMe = () => {
               >
                 <DatePicker
                   label="Seleccioná una fecha"
-                  value={inputs.fecha}
+                  value={formik.values.fecha}
                   onChange={(newDate) => {
-                    setInputs({
-                      ...inputs,
-                      fecha: newDate,
-                      hora: "",
-                    });
+                    formik.setFieldValue("fecha", newDate);
+                    formik.setFieldValue("hora", "");
                   }}
+                  onBlur={() => formik.setFieldTouched("fecha", true)}
                   shouldDisableDate={(day) => {
-                    const weekday = day.day(); // 0 domingo, 6 sábado
+                    const weekday = day.day();
                     if (weekday === 0 || weekday === 6) return true;
                     if (day.isBefore(dayjs(), "day")) return true;
                     if (day.isAfter(dayjs().add(2, "week"), "day")) return true;
                     return false;
+                  }}
+                  slotProps={{
+                    textField: {
+                      error:
+                        formik.touched.fecha && Boolean(formik.errors.fecha),
+                      helperText: formik.touched.fecha && formik.errors.fecha,
+                    },
                   }}
                 />
               </LocalizationProvider>
 
               <FormControl
                 fullWidth
-                disabled={!inputs.fecha}
-                sx={{ marginBottom: "1em" }}
+                error={formik.touched.hora && Boolean(formik.errors.hora)}
               >
                 <InputLabel>Hora</InputLabel>
                 <Select
                   label="Hora"
-                  value={inputs.hora}
-                  onChange={(e) => {
-                    setInputs({
-                      ...inputs,
-                      hora: e.target.value,
-                    });
-                  }}
+                  name="hora"
+                  value={formik.values.hora}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 >
-                  {inputs.fecha ? (
-                    getHorariosDisponibles(inputs.fecha).length > 0 ? (
-                      getHorariosDisponibles(inputs.fecha).map((time) => (
-                        <MenuItem key={time} value={time}>
-                          {time}
-                        </MenuItem>
-                      ))
+                  {formik.values.fecha ? (
+                    getHorariosDisponibles(formik.values.fecha).length > 0 ? (
+                      getHorariosDisponibles(formik.values.fecha).map(
+                        (time) => (
+                          <MenuItem key={time} value={time}>
+                            {time}
+                          </MenuItem>
+                        )
+                      )
                     ) : (
                       <MenuItem disabled>No hay horas disponibles</MenuItem>
                     )
@@ -294,38 +328,46 @@ const WorkWithMe = () => {
                     <MenuItem disabled>Elegí una fecha</MenuItem>
                   )}
                 </Select>
+
+                {formik.touched.hora && formik.errors.hora && (
+                  <Typography
+                    variant="caption"
+                    color="error"
+                    marginLeft={"14px"}
+                  >
+                    {formik.errors.hora}
+                  </Typography>
+                )}
               </FormControl>
+
+              <TextField
+                label="Motivo de consulta"
+                multiline
+                rows={4}
+                fullWidth
+                name="motivo"
+                value={formik.values.motivo}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.motivo && Boolean(formik.errors.motivo)}
+                helperText={formik.touched.motivo && formik.errors.motivo}
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  background: "#01819d",
+                  color: "white",
+                  width: "max-content",
+                  marginTop: "1em",
+                  animation: "none",
+                }}
+                disabled={loading}
+              >
+                {loading ? "Cargando..." : "Enviar solicitud"}
+              </Button>
             </Box>
-
-            <TextField
-              label="Motivo de consulta"
-              multiline
-              rows={4}
-              variant="outlined"
-              fullWidth
-              value={inputs.motivo}
-              onChange={(e) => {
-                setInputs({
-                  ...inputs,
-                  motivo: e.target.value,
-                });
-              }}
-            />
-
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                background: "#01819d",
-                color: "white",
-                width: "max-content",
-                marginTop: "1em",
-                animation: "none",
-              }}
-              disabled={loading}
-            >
-              {loading ? "Cargando..." : "Enviar solicitud"}
-            </Button>
           </form>
         </Box>
       </Grid>

@@ -16,38 +16,47 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../service/authService";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [inputs, setInputs] = useState({});
   const [error, setError] = useState("");
 
-  async function handleLogin(e) {
-    try {
-      e.preventDefault();
-      setLoading(true);
-      setError("");
+  const schema = Yup.object({
+    email: Yup.string()
+      .required("El email es obligatorio")
+      .email("Email inválido"),
+    password: Yup.string().required("La contraseña es obligatoria"),
+  });
 
-      let response = await login(inputs);
-      let token = response.data.token;
-      document.cookie = `authToken=${token}; path=/; secure; samesite=strict`;
+  const formik = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: schema,
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        setError("");
 
-      navigate("/citas");
-    } catch (err) {
-      console.log("error al cancelar:", err);
+        const response = await login(values);
+        const token = response.data.token;
 
-      if (err.response?.data?.error) setError(err.response.data.error);
-      else if (err.response?.data?.message) setError(err.response.data.message);
-      else
-        setError(
-          "Ocurrió un error a la hora de realizar el login. Por favor, reintente más tarde."
-        );
-    } finally {
-      setLoading(false);
-    }
-  }
+        document.cookie = `authToken=${token}; path=/; secure; samesite=strict`;
+
+        navigate("/citas");
+      } catch (err) {
+        if (err.response?.data?.error) setError(err.response.data.error);
+        else if (err.response?.data?.message)
+          setError(err.response.data.message);
+        else
+          setError(
+            "ocurrió un error a la hora de realizar el login. por favor, reintente más tarde."
+          );
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   return (
     <Grid container sx={{ minHeight: "100vh", overflow: "hidden" }}>
@@ -106,26 +115,34 @@ export default function Login() {
             </Alert>
           )}
 
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <TextField
               fullWidth
               margin="normal"
               id="email"
+              name="email"
               label="Email"
               variant="outlined"
-              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
             />
 
             <TextField
               fullWidth
               margin="normal"
               id="password"
+              name="password"
               label="Contraseña"
               type={showPassword ? "text" : "password"}
               variant="outlined"
-              onChange={(e) =>
-                setInputs({ ...inputs, password: e.target.value })
-              }
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -160,9 +177,9 @@ export default function Login() {
 
             <Box display="flex" justifyContent="center" mt={2}>
               <Button
-                onClick={handleLogin}
+                type="submit"
                 variant="contained"
-                disabled={loading}
+                disabled={formik.isSubmitting}
                 sx={{
                   backgroundColor: "#01819d",
                   mt: 2,
@@ -171,10 +188,11 @@ export default function Login() {
                   display: "block",
                 }}
               >
-                {loading ? "Cargando..." : "Ingresar"}
+                {formik.isSubmitting ? "Cargando..." : "Ingresar"}
               </Button>
             </Box>
           </form>
+
           <Card
             variant="outlined"
             sx={{
