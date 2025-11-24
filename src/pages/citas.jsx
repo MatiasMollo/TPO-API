@@ -126,7 +126,7 @@ export default function Citas() {
               onChange={(e) => setEstado(e.target.value)}
             >
               <MenuItem value="">Todos los estados</MenuItem>
-              <MenuItem value="pendiente">Sin confirmar</MenuItem>
+              <MenuItem value="pendiente">Solicitada</MenuItem>
               <MenuItem value="confirmado">Confirmada</MenuItem>
               <MenuItem value="cancelado">Cancelada</MenuItem>
             </Select>
