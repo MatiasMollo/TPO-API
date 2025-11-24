@@ -182,8 +182,8 @@ export default function Citas() {
                   </TableCell>
                 </TableRow>
               ) : (
-                citas.map((cita, idx) => (
-                  <TableRow key={idx}>
+                citas.map((cita) => (
+                  <TableRow key={"cita" + cita.id}>
                     <TableCell align="center">{cita.cliente.nombre}</TableCell>
                     <TableCell align="center">{cita.fecha}</TableCell>
                     <TableCell align="center">{cita.hora}</TableCell>
@@ -233,7 +233,7 @@ export default function Citas() {
                             variant="contained"
                             color="success"
                             size="small"
-                            onClick={() => handleConfirmar(idx + 1)}
+                            onClick={() => handleConfirmar(cita.id)}
                             sx={{ fontSize: "0.7rem" }}
                           >
                             Confirmar
@@ -246,7 +246,7 @@ export default function Citas() {
                             variant="contained"
                             color="error"
                             size="small"
-                            onClick={() => handleCancelar(idx + 1)}
+                            onClick={() => handleCancelar(cita.id)}
                             sx={{ fontSize: "0.7rem" }}
                           >
                             Cancelar
