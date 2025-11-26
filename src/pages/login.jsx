@@ -8,16 +8,14 @@ import {
   Button,
   TextField,
   InputAdornment,
-  FormControlLabel,
-  Checkbox,
   Card,
   Alert,
 } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { login } from "../service/authService";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +38,6 @@ export default function Login() {
 
         const response = await login(values);
         const token = response.data.token;
-
         document.cookie = `authToken=${token}; path=/; secure; samesite=strict`;
 
         navigate("/citas");

@@ -1,20 +1,14 @@
 import axios from "axios";
+import { getJwtHeaders } from "../utils";
 
 const api = "http://localhost:3000/api/citas";
 
-function authHeader() {
-  const token = document.cookie
-    .split("; ")
-    .find((c) => c.startsWith("authToken="))
-    ?.split("=")[1];
 
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
 
 export async function getCitas(params = {}, isJwt = false) {
   const config = { params };
   if (isJwt) {
-    config.headers = authHeader();
+    config.headers = getJwtHeaders();
   }
 
   const res = await axios.get(api, config);
@@ -25,7 +19,7 @@ export async function confirmarCita(id) {
   const res = await axios.put(
     `${api}/${id}/confirm`,
     {},
-    { headers: authHeader() }
+    { headers: getJwtHeaders() }
   );
   return res.data.cita;
 }
@@ -34,7 +28,7 @@ export async function cancelarCita(id) {
   const res = await axios.put(
     `${api}/${id}/cancel`,
     {},
-    { headers: authHeader() }
+    { headers: getJwtHeaders() }
   );
   return res.data.cita;
 }
