@@ -188,6 +188,7 @@ export default function Citas() {
               <TableHead>
                 <TableRow>
                   <TableCell align="center">Paciente</TableCell>
+                  <TableCell align="center">Obra Social</TableCell>
                   <TableCell align="center">Fecha</TableCell>
                   <TableCell align="center">Hora</TableCell>
                   <TableCell align="center">Estado</TableCell>
@@ -213,6 +214,7 @@ export default function Citas() {
                       <TableCell align="center">
                         {cita.cliente.nombre}
                       </TableCell>
+                      <TableCell align="center"> {cita.cliente?.obraSocial?.nombre ?? ""} </TableCell>
                       <TableCell align="center">{cita.fecha}</TableCell>
                       <TableCell align="center">{cita.hora}</TableCell>
                       <TableCell align="center">
@@ -228,7 +230,6 @@ export default function Citas() {
                           />
                         )}
 
-                        {/* estado cancelado */}
                         {cita.estado === "cancelado" && (
                           <Chip label="Cancelada" color="error" size="small" />
                         )}
