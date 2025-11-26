@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,11 +9,16 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { UserIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftEndOnRectangleIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
+import { matarSesion, usuarioLogueado } from "../../utils";
 
 function Header({ menuItems = [], mode = "home" }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   return (
     <AppBar position="fixed" style={{ backgroundColor: "#01819d" }}>
@@ -30,30 +35,32 @@ function Header({ menuItems = [], mode = "home" }) {
             paddingY: { xs: 2, md: 0 },
           }}
         >
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Typography
-              variant="h5"
-              noWrap
-              sx={{
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "white",
-                textDecoration: "none !important",
-                marginLeft: { xs: 1, md: 0 },
-              }}
-              onClick={(e) => {
-                if (pathname === "/") {
-                  e.preventDefault();
-                  document
-                    .getElementById("home")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-            >
-              DR SANCHEZ
-            </Typography>
-          </Link>
+          {!usuarioLogueado() && (
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <Typography
+                variant="h5"
+                noWrap
+                sx={{
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "white",
+                  textDecoration: "none !important",
+                  marginLeft: { xs: 1, md: 0 },
+                }}
+                onClick={(e) => {
+                  if (pathname === "/") {
+                    e.preventDefault();
+                    document
+                      .getElementById("home")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                DR SANCHEZ
+              </Typography>
+            </Link>
+          )}
 
           <Box sx={{ flexGrow: 1, display: "flex" }}>
             {menuItems.map((page) =>
@@ -91,7 +98,8 @@ function Header({ menuItems = [], mode = "home" }) {
             )}
           </Box>
 
-          <Box>
+          {/*Si está deslogueado, ve el login. Si no, ve el botón para desloguearse */}
+          {!usuarioLogueado() ? (
             <Link to="/login">
               <Tooltip title="Login">
                 <IconButton sx={{ p: 0 }}>
@@ -106,7 +114,22 @@ function Header({ menuItems = [], mode = "home" }) {
                 </IconButton>
               </Tooltip>
             </Link>
-          </Box>
+          ) : (
+            <Tooltip title="Logout">
+              <IconButton sx={{ p: 0 }}>
+                <ArrowLeftEndOnRectangleIcon
+                  style={{
+                    width: 26,
+                    height: 26,
+                    color: "white",
+                    marginTop: pathname === "/login" ? 10 : 0,
+                  }}
+                  onClick={() => matarSesion(navigate)}
+                />
+              </IconButton>
+            </Tooltip>
+          )}
+
         </Toolbar>
       </Container>
     </AppBar>
