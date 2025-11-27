@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getJwtHeaders } from "../utils";
 
-const api = "http://localhost:3000/api/citas";
+const api = `${import.meta.env.VITE_API_URL}/citas`;
 
 
 
