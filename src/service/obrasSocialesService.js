@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getJwtHeaders } from "../utils";
 
-const API = "http://localhost:3000/api/obraSocial";
+const API = `${import.meta.env.VITE_API_URL}/obraSocial`;
 
 export function getObrasSociales() {
   return axios.get(API);
