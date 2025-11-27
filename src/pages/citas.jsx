@@ -349,7 +349,7 @@ export default function Citas() {
           onClose={handleCerrarModalDescripcion}
         >
           <DialogTitle>Motivo de consulta</DialogTitle>
-          <DialogContent sx={{ minWidth: 300 }}>
+          <DialogContent sx={{ maxWidth: 300 }}>
             <DialogContentText>{motivoConsulta}</DialogContentText>
             <DialogActions>
               <Button
