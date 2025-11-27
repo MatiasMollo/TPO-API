@@ -32,6 +32,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { cancelarCita, confirmarCita, getCitas } from "../service/citasService";
+import dayjs from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
@@ -166,11 +170,30 @@ export default function Citas() {
             size="small"
             sx={{ width: { xs: "100%", md: "auto" }, minWidth: 200 }}
           >
-            <TextField
-              type="date"
-              size="small"
-              onChange={(e) => setFecha(e.target.value)}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+              <DatePicker
+                label="Seleccioná una fecha"
+                onChange={(newDate) => setFecha(newDate)}
+                shouldDisableDate={(day) => {
+                  const weekday = day.day();
+                  if (weekday === 0 || weekday === 6) return true;
+                  if (day.isBefore(dayjs(), "day")) return true;
+                  return false;
+                }}
+                slotProps={{
+                  textField: {
+                    sx: {
+                      "& .MuiPickersInputBase-root": {
+                        height: "40px",
+                      },
+                      "& .MuiFormLabel-root": {
+                        top: "-7px",
+                      },
+                    },
+                  },
+                }}
+              />
+            </LocalizationProvider>
           </FormControl>
         </Box>
       </Paper>
