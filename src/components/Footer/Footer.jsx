@@ -1,5 +1,10 @@
 import React from "react";
 import { Box, Container, Typography } from "@mui/material";
+import {
+  PhoneIcon,
+  MapPinIcon,
+  EnvelopeIcon,
+} from "@heroicons/react/24/outline";
 
 const Footer = () => {
   return (
@@ -22,12 +27,18 @@ const Footer = () => {
       >
         <Box>
           <Typography>Riobamba 972</Typography>
-          <Typography>📍 CABA, Buenos Aires</Typography>
+          <Typography>
+            <MapPinIcon width="15" /> 11 1576-4937 CABA, Buenos Aires
+          </Typography>
         </Box>
 
         <Box>
-          <Typography>📩 Healthy-Dent@hotmail.com</Typography>
-          <Typography>📞 11 1576-4937</Typography>
+          <Typography>
+            <EnvelopeIcon width="15" /> Healthy-Dent@hotmail.com
+          </Typography>
+          <Typography>
+            <PhoneIcon width="15" /> 11 1576-4937
+          </Typography>
           <Typography display="block">
             © Hecho por Avilan Carlos, Mollo Matias y Pou Iara.
           </Typography>
