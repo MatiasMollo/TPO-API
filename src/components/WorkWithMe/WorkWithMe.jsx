@@ -85,12 +85,12 @@ const WorkWithMe = () => {
     setError("");
 
     try {
-      const cita = await crearCita({
+      await crearCita({
         ...values,
         fecha: values.fecha.format("YYYY-MM-DD"),
       });
-
       await handleGetCitas(); // refrescamos horarios
+
       formik.resetForm();
       setOpenSnackbar(true);
     } catch (err) {

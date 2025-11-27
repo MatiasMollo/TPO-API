@@ -1,11 +1,21 @@
-import { FunnelIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import {
+  FunnelIcon,
+  PhoneIcon,
+  PlusCircleIcon,
+} from "@heroicons/react/24/outline";
 import {
   Box,
   Button,
   Chip,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -17,6 +27,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -28,6 +39,9 @@ export default function Citas() {
   const [fecha, setFecha] = useState("");
   const [nombre, setNombre] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [abrirModalDescripcion, setAbrirModalDescripcion] = useState(false);
+  const [motivoConsulta, setMotivoConsulta] = useState("");
 
   async function cargarCitasConFiltros() {
     try {
@@ -64,6 +78,11 @@ export default function Citas() {
       setLoading(false);
     }
   }
+
+  const handleCerrarModalDescripcion = () => {
+    setAbrirModalDescripcion(false);
+    setMotivoConsulta("");
+  };
 
   useEffect(() => {
     cargarCitasConFiltros();
@@ -193,7 +212,7 @@ export default function Citas() {
                   <TableCell align="center">Hora</TableCell>
                   <TableCell align="center">Estado</TableCell>
                   <TableCell align="center">Contacto</TableCell>
-                  <TableCell align="center">Notas</TableCell>
+                  <TableCell align="center">Motivo solicitud</TableCell>
                   <TableCell align="center">Acciones</TableCell>
                 </TableRow>
               </TableHead>
@@ -214,7 +233,10 @@ export default function Citas() {
                       <TableCell align="center">
                         {cita.cliente.nombre}
                       </TableCell>
-                      <TableCell align="center"> {cita.cliente?.obraSocial?.nombre ?? ""} </TableCell>
+                      <TableCell align="center">
+                        {" "}
+                        {cita.cliente?.obraSocial?.nombre ?? ""}{" "}
+                      </TableCell>
                       <TableCell align="center">{cita.fecha}</TableCell>
                       <TableCell align="center">{cita.hora}</TableCell>
                       <TableCell align="center">
@@ -242,6 +264,8 @@ export default function Citas() {
                           {cita.cliente.email}
                         </Typography>
                       </TableCell>
+
+                      {/* Aca va a ir el boton con el modal */}
                       <TableCell
                         align="center"
                         sx={{
@@ -250,8 +274,23 @@ export default function Citas() {
                           boxSizing: "border-box",
                         }}
                       >
-                        {cita.motivo}
+                        <Tooltip title="Más información">
+                          <IconButton>
+                            <PlusCircleIcon
+                              style={{
+                                width: 26,
+                                height: 26,
+                                color: "black",
+                              }}
+                              onClick={() => {
+                                setMotivoConsulta(cita.motivo);
+                                setAbrirModalDescripcion(true);
+                              }}
+                            />
+                          </IconButton>
+                        </Tooltip>
                       </TableCell>
+
                       <TableCell align="center">
                         <span
                           style={{
@@ -303,6 +342,26 @@ export default function Citas() {
             </Table>
           </TableContainer>
         )}
+
+        {/* Modal con descripcion de la cita */}
+        <Dialog
+          open={abrirModalDescripcion}
+          onClose={handleCerrarModalDescripcion}
+        >
+          <DialogTitle>Motivo de consulta</DialogTitle>
+          <DialogContent sx={{ minWidth: 300 }}>
+            <DialogContentText>{motivoConsulta}</DialogContentText>
+            <DialogActions>
+              <Button
+                onClick={handleCerrarModalDescripcion}
+                color="primary"
+                variant="contained"
+              >
+                Aceptar
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
       </Paper>
     </Container>
   );
